@@ -1,8 +1,18 @@
-let dinosaurs=[];
+let dinosaurs = [];
 
-const $=id=>document.getElementById(id);
-const fmt=n=>Number.isFinite(n)?n.toLocaleString("ja-JP",{maximumFractionDigits:2}):"—";
-const val=(id,fallback=0)=>{const raw=$(id).value;const n=Number(raw);return Number.isFinite(n)&&raw.trim()!==""?n:fallback;};
+const $ = id => document.getElementById(id);
+const fmt = n => Number.isFinite(n) ? n.toLocaleString("ja-JP", { maximumFractionDigits: 2 }) : "—";
+const val = (id, fallback = 0) => {
+  const raw = $(id).value;
+  const n = Number(raw);
+  return Number.isFinite(n) && raw.trim() !== "" ? n : fallback;
+};
+
+function sortDinosaurs(list) {
+  return list
+    .map((d, index) => ({ ...d, __index: index }))
+    .sort((a, b) => a.name.localeCompare(b.name, "ja", { sensitivity: "base", numeric: true }));
+}
 
 // ============================
 // 関数名 : init
@@ -10,29 +20,52 @@ const val=(id,fallback=0)=>{const raw=$(id).value;const n=Number(raw);return Num
 // 戻り値: Promise<void>
 // 説明 : 外部の dinosaurs.json からデータを非同期で読み込み、セレクトボックスの初期化・イベントリスナーの登録・初期計算を行う
 // ============================
-async function init(){
-  const response=await fetch("dinosaurs.json");
-  dinosaurs=await response.json();
-  ["A","B"].forEach(side=>{
-    const select=$("dino"+side);
-    dinosaurs.forEach((d,index)=>{
-      const option=document.createElement("option");
-      option.value=index;option.textContent=d.name+"（"+d.english+"）";select.appendChild(option);
+async function init() {
+  const response = await fetch("dinosaurs.json");
+  dinosaurs = await response.json();
+
+  const sortedDinosaurs = sortDinosaurs(dinosaurs);
+
+  ["A", "B"].forEach(side => {
+    const select = $("dino" + side);
+
+    select.innerHTML = "";
+
+    sortedDinosaurs.forEach(d => {
+      const option = document.createElement("option");
+      option.value = String(d.__index);
+      option.textContent = d.name + "（" + d.english + "）";
+      select.appendChild(option);
     });
-    select.value=side==="A"?dinosaurs.findIndex(d=>d.name==="サルコスクス"):dinosaurs.findIndex(d=>d.name==="ティラノサウルス");
-    select.addEventListener("change",()=>loadDino(side));
 
-    ["hp","weight","initialArmor","attack","custom","speciesBonus","attackBuff1","attackBuff2","attackBuff3","attackDebuff1","attackDebuff2","defenseBuff1","defenseBuff2","defenseBuff3","defenseDebuff1","defenseDebuff2"].forEach(k=>$(k+side).addEventListener("input",calculate));
+    const defaultName = side === "A" ? "サルコスクス" : "ティラノサウルス";
+    select.value = String(dinosaurs.findIndex(d => d.name === defaultName));
 
-    $("speciesMode"+side).addEventListener("change",()=>{
+    select.addEventListener("change", () => loadDino(side));
+
+    $("speciesMode" + side).addEventListener("change", () => {
       toggleSpeciesBonus(side);
       calculate();
     });
 
-    document.querySelectorAll(`input[name="part${side}"]`).forEach(el=>el.addEventListener("change",()=>{toggleCustom(side);calculate()}));
+    document.querySelectorAll(`input[name="part${side}"]`).forEach(el => {
+      el.addEventListener("change", () => {
+        toggleCustom(side);
+        calculate();
+      });
+    });
+
+    ["hp", "weight", "initialArmor", "attack", "custom", "speciesBonus", "attackBuff1", "attackBuff2", "attackBuff3", "attackDebuff1", "attackDebuff2", "defenseBuff1", "defenseBuff2", "defenseBuff3", "defenseDebuff1", "defenseDebuff2"].forEach(field => {
+      const el = $(field + side);
+      if (el) {
+        el.addEventListener("input", calculate);
+      }
+    });
+
     loadDino(side);
   });
-  $("reset").addEventListener("click",resetAll);
+
+  $("reset").addEventListener("click", resetAll);
   calculate();
 }
 
@@ -42,8 +75,8 @@ async function init(){
 // 戻り値: Object (選択されている恐竜のデータオブジェクト)
 // 説明 : 指定されたサイドのセレクトボックスで現在選択されている恐竜のデータを返す
 // ============================
-function selected(side){
-  return dinosaurs[Number($("dino"+side).value)]
+function selected(side) {
+  return dinosaurs[Number($("dino" + side).value)];
 }
 
 // ============================
@@ -52,28 +85,28 @@ function selected(side){
 // 戻り値: なし
 // 説明 : 選択された恐竜のステータス（HP・体重・初期鎧値・攻撃力）をフォームの入力欄に反映させ、再計算を行う
 // ============================
-function loadDino(side){
-  const d=selected(side);
-  $("hp"+side).value=d.hp;
-  $("weight"+side).value=d.weight;
-  $("initialArmor"+side).value=d.initialArmor;
-  $("attack"+side).value=d.attack;
+function loadDino(side) {
+  const d = selected(side);
+  $("hp" + side).value = d.hp;
+  $("weight" + side).value = d.weight;
+  $("initialArmor" + side).value = d.initialArmor;
+  $("attack" + side).value = d.attack;
 
-  $("speciesMode"+side).value="none";
-  $("speciesBonus"+side).value="0";
+  $("speciesMode" + side).value = "none";
+  $("speciesBonus" + side).value = "0";
   toggleSpeciesBonus(side);
 
-  $("attackBuff1"+side).value="0";
-  $("attackBuff2"+side).value="0";
-  $("attackBuff3"+side).value="0";
-  $("attackDebuff1"+side).value="0";
-  $("attackDebuff2"+side).value="0";
+  $("attackBuff1" + side).value = "0";
+  $("attackBuff2" + side).value = "0";
+  $("attackBuff3" + side).value = "0";
+  $("attackDebuff1" + side).value = "0";
+  $("attackDebuff2" + side).value = "0";
 
-  $("defenseBuff1"+side).value="0";
-  $("defenseBuff2"+side).value="0";
-  $("defenseBuff3"+side).value="0";
-  $("defenseDebuff1"+side).value="0";
-  $("defenseDebuff2"+side).value="0";
+  $("defenseBuff1" + side).value = "0";
+  $("defenseBuff2" + side).value = "0";
+  $("defenseBuff3" + side).value = "0";
+  $("defenseDebuff1" + side).value = "0";
+  $("defenseDebuff2" + side).value = "0";
 
   toggleCustom(side);
   calculate();
@@ -85,9 +118,9 @@ function loadDino(side){
 // 戻り値: なし
 // 説明 : 被弾部位で「その他（カスタム）」が選択されている場合のみ、個別倍率の入力欄を表示する
 // ============================
-function toggleCustom(side){
-  const part=document.querySelector(`input[name="part${side}"]:checked`).value;
-  $("customWrap"+side).classList.toggle("hidden",part!=="custom");
+function toggleCustom(side) {
+  const part = document.querySelector(`input[name="part${side}"]:checked`).value;
+  $("customWrap" + side).classList.toggle("hidden", part !== "custom");
 }
 
 // ============================
@@ -96,15 +129,15 @@ function toggleCustom(side){
 // 戻り値: なし
 // 説明 : 種族補正の状態が「なし」なら入力欄を無効化し、攻撃/防御なら有効化する
 // ============================
-function toggleSpeciesBonus(side){
-  const mode=$("speciesMode"+side).value;
-  const input=$("speciesBonus"+side);
-  const enabled=mode==="attack"||mode==="defense";
+function toggleSpeciesBonus(side) {
+  const mode = $("speciesMode" + side).value;
+  const input = $("speciesBonus" + side);
+  const enabled = mode === "attack" || mode === "defense";
 
-  input.disabled=!enabled;
+  input.disabled = !enabled;
 
-  if(!enabled){
-    input.value="0";
+  if (!enabled) {
+    input.value = "0";
   }
 }
 
@@ -114,13 +147,13 @@ function toggleSpeciesBonus(side){
 // 戻り値: number (種族補正倍率)
 // 説明 : 種族補正の種類（なし / 攻撃 / 防御）と値を元に倍率を返す
 // ============================
-function speciesMultiplier(side){
-  const mode=$("speciesMode"+side).value;
-  const bonus=val("speciesBonus"+side,0);
+function speciesMultiplier(side) {
+  const mode = $("speciesMode" + side).value;
+  const bonus = val("speciesBonus" + side, 0);
 
-  if(mode==="none") return 1;
-  if(mode==="attack") return 1 + bonus/100;
-  if(mode==="defense") return 1 - bonus/100;
+  if (mode === "none") return 1;
+  if (mode === "attack") return 1 + bonus / 100;
+  if (mode === "defense") return 1 - bonus / 100;
 
   return 1;
 }
@@ -131,9 +164,9 @@ function speciesMultiplier(side){
 // 戻り値: number (攻撃力バフ合計倍率)
 // 説明 : 攻撃力バフ1〜3の合計をまとめて倍率に変換する
 // ============================
-function attackBuffTotal(side){
-  const sum=val("attackBuff1"+side,0)+val("attackBuff2"+side,0)+val("attackBuff3"+side,0);
-  return 1 + sum/100;
+function attackBuffTotal(side) {
+  const sum = val("attackBuff1" + side, 0) + val("attackBuff2" + side, 0) + val("attackBuff3" + side, 0);
+  return 1 + sum / 100;
 }
 
 // ============================
@@ -142,9 +175,9 @@ function attackBuffTotal(side){
 // 戻り値: number (攻撃デバフ合計倍率)
 // 説明 : 攻撃デバフ1〜2の合計をまとめて倍率に変換する
 // ============================
-function attackDebuffTotal(side){
-  const sum=val("attackDebuff1"+side,0)+val("attackDebuff2"+side,0);
-  return 1 - sum/100;
+function attackDebuffTotal(side) {
+  const sum = val("attackDebuff1" + side, 0) + val("attackDebuff2" + side, 0);
+  return 1 - sum / 100;
 }
 
 // ============================
@@ -153,9 +186,9 @@ function attackDebuffTotal(side){
 // 戻り値: number (防御バフ合計倍率)
 // 説明 : 防御バフ1〜3の合計をまとめて倍率に変換する。アーマー%はダメージ減少として扱う
 // ============================
-function defenseBuffTotal(side){
-  const sum=val("defenseBuff1"+side,0)+val("defenseBuff2"+side,0)+val("defenseBuff3"+side,0);
-  return 1 - sum/100;
+function defenseBuffTotal(side) {
+  const sum = val("defenseBuff1" + side, 0) + val("defenseBuff2" + side, 0) + val("defenseBuff3" + side, 0);
+  return 1 - sum / 100;
 }
 
 // ============================
@@ -164,9 +197,9 @@ function defenseBuffTotal(side){
 // 戻り値: number (防御デバフ合計倍率)
 // 説明 : 防御デバフ1〜2の合計をまとめて倍率に変換する
 // ============================
-function defenseDebuffTotal(side){
-  const sum=val("defenseDebuff1"+side,0)+val("defenseDebuff2"+side,0);
-  return 1 - sum/100;
+function defenseDebuffTotal(side) {
+  const sum = val("defenseDebuff1" + side, 0) + val("defenseDebuff2" + side, 0);
+  return 1 - sum / 100;
 }
 
 // ============================
@@ -175,12 +208,12 @@ function defenseDebuffTotal(side){
 // 戻り値: number (部位倍率)
 // 説明 : 選択されている被弾部位に応じたダメージ倍率（頭1.2、胴体/足手1.0、尻尾0.25、カスタム手入力）を返す
 // ============================
-function partMultiplier(side){
-  const part=document.querySelector(`input[name="part${side}"]:checked`).value;
-  if(part==="head")return 1.2;
-  if(part==="body"||part==="limb")return 1;
-  if(part==="tail")return .25;
-  return Math.max(0,val("custom"+side,0));
+function partMultiplier(side) {
+  const part = document.querySelector(`input[name="part${side}"]:checked`).value;
+  if (part === "head") return 1.2;
+  if (part === "body" || part === "limb") return 1;
+  if (part === "tail") return .25;
+  return Math.max(0, val("custom" + side, 0));
 }
 
 // ============================
@@ -189,33 +222,33 @@ function partMultiplier(side){
 // 戻り値: Object (体重比、部位倍率、装甲倍率、補正前ダメ、部位後ダメ、最終ダメ、撃破発数、HPなど)
 // 説明 : 攻撃側から防御側への最終ダメージおよび撃破必要回数を計算する
 // ============================
-function compute(attSide,defSide){
-  const attack=Math.max(0,val("attack"+attSide,0));
-  const hp=Math.max(0,val("hp"+defSide,0));
-  const attackerWeight=Math.max(0,val("weight"+attSide,0));
-  const defenderWeight=Math.max(.000001,val("weight"+defSide,0));
+function compute(attSide, defSide) {
+  const attack = Math.max(0, val("attack" + attSide, 0));
+  const hp = Math.max(0, val("hp" + defSide, 0));
+  const attackerWeight = Math.max(0, val("weight" + attSide, 0));
+  const defenderWeight = Math.max(.000001, val("weight" + defSide, 0));
 
-  const body=partMultiplier(defSide);
+  const body = partMultiplier(defSide);
 
-  const attackBuff=attackBuffTotal(attSide);
-  const attackDebuff=attackDebuffTotal(attSide);
-  const defenseBuff=defenseBuffTotal(defSide);
-  const defenseDebuff=defenseDebuffTotal(defSide);
+  const attackBuff = attackBuffTotal(attSide);
+  const attackDebuff = attackDebuffTotal(attSide);
+  const defenseBuff = defenseBuffTotal(defSide);
+  const defenseDebuff = defenseDebuffTotal(defSide);
 
-  const attackSpeciesBoost=speciesMultiplier(attSide);
-  const defenseSpeciesBoost=speciesMultiplier(defSide);
+  const attackSpeciesBoost = speciesMultiplier(attSide);
+  const defenseSpeciesBoost = speciesMultiplier(defSide);
 
-  const weightRatio=attackerWeight/defenderWeight;
-  const raw=attack*attackBuff*attackSpeciesBoost*weightRatio;
-  const afterPart=raw*body;
+  const weightRatio = attackerWeight / defenderWeight;
+  const raw = attack * attackBuff * attackSpeciesBoost * weightRatio;
+  const afterPart = raw * body;
 
-  const attackModifier=attackBuff*attackDebuff*attackSpeciesBoost;
-  const defenseModifier=defenseBuff*defenseDebuff*defenseSpeciesBoost;
-  const totalMultiplier=attackModifier*weightRatio*body*defenseModifier;
+  const attackModifier = attackBuff * attackDebuff * attackSpeciesBoost;
+  const defenseModifier = defenseBuff * defenseDebuff * defenseSpeciesBoost;
+  const totalMultiplier = attackModifier * weightRatio * body * defenseModifier;
 
-  const final=afterPart*defenseBuff*defenseDebuff*attackDebuff*defenseSpeciesBoost;
+  const final = afterPart * defenseBuff * defenseDebuff * attackDebuff * defenseSpeciesBoost;
 
-  const hits=final>0?Math.ceil(hp/final):null;
+  const hits = final > 0 ? Math.ceil(hp / final) : null;
 
   return {
     attack,
@@ -238,18 +271,18 @@ function compute(attSide,defSide){
 // 戻り値: なし
 // 説明 : 計算されたダメージや詳細な内訳、撃破までの発数を画面の指定カードに描画する
 // ============================
-function render(key,attacker,defender,r){
-  $("name"+key).textContent=attacker+" → "+defender;
-  $("damage"+key).textContent=fmt(r.final);
+function render(key, attacker, defender, r) {
+  $("name" + key).textContent = attacker + " → " + defender;
+  $("damage" + key).textContent = fmt(r.final);
 
-  $("mult"+key).textContent=fmt(r.totalMultiplier)+" 倍";
-  $("attack"+key).textContent=fmt(r.attack);
-  $("weight"+key).textContent=fmt(r.weightRatio)+" 倍";
-  $("body"+key).textContent=fmt(r.body)+" 倍";
-  $("attackMod"+key).textContent=fmt(r.attackModifier)+" 倍";
-  $("defenseMod"+key).textContent=fmt(r.defenseModifier)+" 倍";
+  $("mult" + key).textContent = fmt(r.totalMultiplier) + " 倍";
+  $("attack" + key).textContent = fmt(r.attack);
+  $("weight" + key).textContent = fmt(r.weightRatio) + " 倍";
+  $("body" + key).textContent = fmt(r.body) + " 倍";
+  $("attackMod" + key).textContent = fmt(r.attackModifier) + " 倍";
+  $("defenseMod" + key).textContent = fmt(r.defenseModifier) + " 倍";
 
-  $("hits"+key).textContent=r.hits===null?"撃破できません（ダメージ0）":"撃破まで "+fmt(r.hits)+" 発（対象HP："+fmt(r.hp)+"）";
+  $("hits" + key).textContent = r.hits === null ? "撃破できません（ダメージ0）" : "撃破まで " + fmt(r.hits) + " 発（対象HP：" + fmt(r.hp) + "）";
 }
 
 // ============================
@@ -258,11 +291,11 @@ function render(key,attacker,defender,r){
 // 戻り値: なし
 // 説明 : A→BおよびB→Aの相互ダメージ計算を実行し、それぞれ画面に描画させる
 // ============================
-function calculate(){
-  if(!dinosaurs.length)return;
-  const A=selected("A"),B=selected("B");
-  render("AB",A.name,B.name,compute("A","B"));
-  render("BA",B.name,A.name,compute("B","A"));
+function calculate() {
+  if (!dinosaurs.length) return;
+  const A = selected("A"), B = selected("B");
+  render("AB", A.name, B.name, compute("A", "B"));
+  render("BA", B.name, A.name, compute("B", "A"));
 }
 
 // ============================
@@ -271,18 +304,24 @@ function calculate(){
 // 戻り値: なし
 // 説明 : すべての入力値や選択状態を初期設定（デフォルト）に戻し、再計算を行う
 // ============================
-function resetAll(){
-  ["A","B"].forEach(side=>{
+function resetAll() {
+  ["A", "B"].forEach(side => {
     loadDino(side);
 
-    $("custom"+side).value="0.00";
-    $("speciesMode"+side).value="none";
-    $("speciesBonus"+side).value="0";
+    $("custom" + side).value = "0.00";
+    $("speciesMode" + side).value = "none";
+    $("speciesBonus" + side).value = "0";
 
-    document.querySelector(`input[name="part${side}"][value="body"]`).checked=true;
+    document.querySelector(`input[name="part${side}"][value="body"]`).checked = true;
     toggleCustom(side);
   });
   calculate();
 }
 
-init().catch(err=>{console.error(err);document.querySelector("main").insertAdjacentHTML("afterend",'<p class="notice" style="margin-top:12px;">恐竜データを読み込めませんでした。dinosaurs.json を確認してください。</p>');});
+init().catch(err => {
+  console.error(err);
+  document.querySelector("main").insertAdjacentHTML(
+    "afterend",
+    '<p class="notice" style="margin-top:12px;">恐竜データを読み込めませんでした。dinosaurs.json を確認してください。</p>'
+  );
+});
