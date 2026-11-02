@@ -1,12 +1,12 @@
-# Path of Titans ダメージ計算機（試作）
+# Path of Titans ダメージ計算ツール (v2)
 
+## 変更点
+- HP・戦闘重量（Combat Weight）・初期鎧値（Armor Value）および攻撃力の直接手動書き換えに対応しました。
+- 防御側の項目名を「Wiki鎧値」から「初期鎧値」へ変更しました。
+- JSONから恐竜を選択すると初期値がフォームに入力され、その後任意に微調整・手動オーバーライドが可能です。
 
-## GitHub Pagesで公開
-1. GitHubで新しいPublicリポジトリを作成
-2. このフォルダ内の4ファイル（index.html, style.css, app.js, dinosaurs.json）をアップロード
-3. Settings → Pages → Deploy from a branch → main / root を選択
-4. 表示されるURLでアクセス
-
-## 注意
-- 登録値はユーザー提供のWiki表を転記した初期値です。現行ゲーム内の正確性を保証するものではありません。
-- 「鎧」列はWiki値として表示用に保持しています。装甲値入力の初期値には適用せず、入力欄は0%です。
+## ファイル構成
+- `index.html`: UIレイアウト
+- `style.css`: デザインスタイル
+- `app.js`: 計算・イベント制御ロジック
+- `dinosaurs.json`: 恐竜初期データ
