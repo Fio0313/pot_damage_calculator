@@ -30,18 +30,19 @@
         <label>体重<input id="weightA" type="number" min="0.01" step="any"></label>
         <label>初期鎧値<input id="initialArmorA" type="number" min="0" step="any"></label>
       </div>
+      <label>種族攻撃ボーナス（%）<input id="speciesAttackBonusA" type="number" min="0" max="100" step="0.1" value="0"></label>
+      <label>種族防御ボーナス（%）<input id="speciesDefenseBonusA" type="number" min="0" max="100" step="0.1" value="0"></label>
       <label>攻撃力（手入力で変更可能）<input id="attackA" type="number" min="0" step="any"></label>
       <div class="buff-stack">
         <label>攻撃力バフ1（%）<input id="attackBuff1A" type="number" min="0" step="0.1" value="0"></label>
         <label>攻撃力バフ2（%）<input id="attackBuff2A" type="number" min="0" step="0.1" value="0"></label>
         <label>攻撃力バフ3（%）<input id="attackBuff3A" type="number" min="0" step="0.1" value="0"></label>
       </div>
-      <label>種族攻撃ボーナス（%）<input id="speciesAttackBonusA" type="number" min="0" max="100" step="0.1" value="0"></label>
-      <label>装甲デバフ（%）<input id="armorDebuffA" type="number" min="0" max="100" step="0.1" value="0">
-        <small class="help">例：20%なら相手の装甲軽減効果を 20% 減らします</small></label>
       <label>装甲軽減率（%）<input id="armorA" type="number" min="0" max="100" step="0.1" value="0">
         <small class="help">例：25%なら 0.75 倍で計算。種族防御ボーナスや鎧補正もここに入れます</small></label>
-      <label>種族防御ボーナス（%）<input id="speciesDefenseBonusA" type="number" min="0" max="100" step="0.1" value="0"></label>
+      <label>装甲デバフ（%）<input id="armorDebuffA" type="number" min="0" max="100" step="0.1" value="0">
+        <small class="help">例：20%なら相手の装甲軽減効果を 20% 減らします</small></label>
+
       <div class="section-label">被弾部位補正（Aが攻撃を受ける場合）</div>
       <div class="part-grid" id="partsA">
         <label><input type="radio" name="partA" value="head">頭 <b>1.2倍</b></label>
