@@ -241,6 +241,23 @@ select:focus {
   background: #171f2a;
 }
 
+.panel {
+  background: #111923;
+  border: 1px solid #303d49;
+  border-radius: 12px;
+  padding: 14px 14px 12px;
+  margin-top: 14px;
+}
+
+.panel-head {
+  color: #d7e9ff;
+  font-size: .8rem;
+  font-weight: 800;
+  letter-spacing: .08em;
+  text-transform: uppercase;
+  margin-bottom: 10px;
+}
+
 .hidden {
   display: none !important;
 }
@@ -311,13 +328,39 @@ select:focus {
   margin: 0;
 }
 
-.detail {
-  border-top: 1px solid #2b3742;
-  margin-top: 13px;
-  padding-top: 10px;
-  color: #aab8c4;
-  font-size: .8rem;
-  line-height: 1.8;
+.result-summary {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 8px;
+  margin-top: 12px;
+}
+
+.result-metric {
+  background: #0d141b;
+  border: 1px solid #2b3742;
+  border-radius: 8px;
+  padding: 8px 7px;
+  min-width: 0;
+}
+
+.result-metric span {
+  display: block;
+  color: #8fa0ad;
+  font-size: .62rem;
+  letter-spacing: .04em;
+}
+
+.result-metric strong {
+  display: block;
+  color: #edf2f8;
+  font-size: .86rem;
+  font-weight: 800;
+  margin-top: 4px;
+  word-break: break-word;
+}
+
+.result-card .damage {
+  margin-bottom: 6px;
 }
 
 .hits {
@@ -380,5 +423,9 @@ footer {
 
   .fighter {
     padding: 16px;
+  }
+
+  .result-summary {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 }

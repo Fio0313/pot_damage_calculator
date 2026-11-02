@@ -23,6 +23,7 @@ async function init(){
     select.addEventListener("change",()=>loadDino(side));
 
     ["hp","weight","initialArmor","attack","custom","speciesBonus","attackBuff1","attackBuff2","attackBuff3","attackDebuff1","attackDebuff2","defenseBuff1","defenseBuff2","defenseBuff3","defenseDebuff1","defenseDebuff2"].forEach(k=>$(k+side).addEventListener("input",calculate));
+
     $("speciesMode"+side).addEventListener("change",()=>{
       toggleSpeciesBonus(side);
       calculate();
@@ -208,23 +209,26 @@ function compute(attSide,defSide){
   const raw=attack*attackBuff*attackSpeciesBoost*weightRatio;
   const afterPart=raw*body;
 
+  const attackModifier=attackBuff*attackDebuff*attackSpeciesBoost;
+  const defenseModifier=defenseBuff*defenseDebuff*defenseSpeciesBoost;
+  const totalMultiplier=attackModifier*weightRatio*body*defenseModifier;
+
   const final=afterPart*defenseBuff*defenseDebuff*attackDebuff*defenseSpeciesBoost;
 
   const hits=final>0?Math.ceil(hp/final):null;
 
   return {
+    attack,
     weightRatio,
     body,
-    attackBuff,
-    attackDebuff,
-    defenseBuff,
-    defenseDebuff,
+    attackModifier,
+    defenseModifier,
+    totalMultiplier,
     raw,
     afterPart,
     final,
     hits,
-    hp,
-    defenseSpeciesBoost
+    hp
   };
 }
 
@@ -237,16 +241,13 @@ function compute(attSide,defSide){
 function render(key,attacker,defender,r){
   $("name"+key).textContent=attacker+" → "+defender;
   $("damage"+key).textContent=fmt(r.final);
-  $("detail"+key).innerHTML=
-    "体重補正："+fmt(r.weightRatio)+"倍<br>"+
-    "部位補正："+fmt(r.body)+"倍<br>"+
-    "攻撃バフ："+fmt(r.attackBuff)+"倍<br>"+
-    "攻撃デバフ："+fmt(r.attackDebuff)+"倍<br>"+
-    "防御バフ："+fmt(r.defenseBuff)+"倍<br>"+
-    "防御デバフ："+fmt(r.defenseDebuff)+"倍<br>"+
-    "補正前："+fmt(r.raw)+" → 部位適用後："+fmt(r.afterPart)+"<br>"+
-    "防御補正："+fmt(r.defenseSpeciesBoost)+"<br>"+
-    "最終ダメージ："+fmt(r.final);
+
+  $("mult"+key).textContent=fmt(r.totalMultiplier)+" 倍";
+  $("attack"+key).textContent=fmt(r.attack);
+  $("weight"+key).textContent=fmt(r.weightRatio)+" 倍";
+  $("body"+key).textContent=fmt(r.body)+" 倍";
+  $("attackMod"+key).textContent=fmt(r.attackModifier)+" 倍";
+  $("defenseMod"+key).textContent=fmt(r.defenseModifier)+" 倍";
 
   $("hits"+key).textContent=r.hits===null?"撃破できません（ダメージ0）":"撃破まで "+fmt(r.hits)+" 発（対象HP："+fmt(r.hp)+"）";
 }
