@@ -126,14 +126,38 @@ function speciesMultiplier(side){
 }
 
 // ============================
+// 関数名 : speciesMultiplierForRole
+// 引数 : side (文字列: "A" または "B"), role (文字列: "attack" または "defense")
+// 戻り値: number (方向ごとの種族補正倍率)
+// 説明 : 攻撃側・防御側ごとに、種族補正が効くかどうかを判定して倍率を返す
+// ============================
+function speciesMultiplierForRole(side, role){
+  const mode=$("speciesMode"+side).value;
+  const bonus=val("speciesBonus"+side,0);
+
+  if(role==="attack"){
+    if(mode==="attack") return 1 + bonus/100;
+    return 1;
+  }
+
+  if(role==="defense"){
+    if(mode==="defense") return 1 - bonus/100;
+    return 1;
+  }
+
+  return 1;
+}
+
+// ============================
 // 関数名 : attackBuffTotal
 // 引数 : side (文字列: "A" または "B")
 // 戻り値: number (攻撃力バフ合計倍率)
 // 説明 : 攻撃力バフ1〜3の合計をまとめて倍率に変換する
 // ============================
 function attackBuffTotal(side){
-  const sum=val("attackBuff1"+side,0)+val("attackBuff2"+side,0)+val("attackBuff3"+side,0);
-  return 1 + sum/100;
+  return (1 + val("attackBuff1"+side,0) / 100)
+       * (1 + val("attackBuff2"+side,0) / 100)
+       * (1 + val("attackBuff3"+side,0) / 100);
 }
 
 // ============================
@@ -143,8 +167,8 @@ function attackBuffTotal(side){
 // 説明 : 攻撃デバフ1〜2の合計をまとめて倍率に変換する
 // ============================
 function attackDebuffTotal(side){
-  const sum=val("attackDebuff1"+side,0)+val("attackDebuff2"+side,0);
-  return 1 - sum/100;
+  return (1 - val("attackDebuff1"+side,0) / 100)
+       * (1 - val("attackDebuff2"+side,0) / 100);
 }
 
 // ============================
@@ -154,8 +178,9 @@ function attackDebuffTotal(side){
 // 説明 : 防御バフ1〜3の合計をまとめて倍率に変換する。アーマー%はダメージ減少として扱う
 // ============================
 function defenseBuffTotal(side){
-  const sum=val("defenseBuff1"+side,0)+val("defenseBuff2"+side,0)+val("defenseBuff3"+side,0);
-  return 1 - sum/100;
+  return Math.max(0, 1 - val("defenseBuff1"+side,0) / 100)
+       * Math.max(0, 1 - val("defenseBuff2"+side,0) / 100)
+       * Math.max(0, 1 - val("defenseBuff3"+side,0) / 100);
 }
 
 // ============================
@@ -165,8 +190,19 @@ function defenseBuffTotal(side){
 // 説明 : 防御デバフ1〜2の合計をまとめて倍率に変換する
 // ============================
 function defenseDebuffTotal(side){
-  const sum=val("defenseDebuff1"+side,0)+val("defenseDebuff2"+side,0);
-  return 1 - sum/100;
+  return (1 + val("defenseDebuff1"+side,0) / 100)
+       * (1 + val("defenseDebuff2"+side,0) / 100);
+}
+
+// ============================
+// 関数名 : initialArmorMultiplier
+// 引数 : side (文字列: "A" または "B")
+// 戻り値: number (初期鎧値のダメージ減少倍率)
+// 説明 : 初期鎧値 1.1 は 10% 鎧なので被ダメージを ×0.9 に軽減する
+// ============================
+function initialArmorMultiplier(side){
+  const armor=val("initialArmor"+side,1);
+  return Math.max(0, 2 - armor);
 }
 
 // ============================
@@ -201,19 +237,20 @@ function compute(attSide,defSide){
   const attackDebuff=attackDebuffTotal(attSide);
   const defenseBuff=defenseBuffTotal(defSide);
   const defenseDebuff=defenseDebuffTotal(defSide);
+  const armorMultiplier=initialArmorMultiplier(defSide);
 
-  const attackSpeciesBoost=speciesMultiplier(attSide);
-  const defenseSpeciesBoost=speciesMultiplier(defSide);
+  const attackSpeciesBoost=speciesMultiplierForRole(attSide,"attack");
+  const defenseSpeciesBoost=speciesMultiplierForRole(defSide,"defense");
 
   const weightRatio=attackerWeight/defenderWeight;
   const raw=attack*attackBuff*attackSpeciesBoost*weightRatio;
   const afterPart=raw*body;
 
   const attackModifier=attackBuff*attackDebuff*attackSpeciesBoost;
-  const defenseModifier=defenseBuff*defenseDebuff*defenseSpeciesBoost;
+  const defenseModifier=defenseBuff*defenseDebuff*defenseSpeciesBoost*armorMultiplier;
   const totalMultiplier=attackModifier*weightRatio*body*defenseModifier;
 
-  const final=afterPart*defenseBuff*defenseDebuff*attackDebuff*defenseSpeciesBoost;
+  const final=afterPart*defenseBuff*defenseDebuff*attackDebuff*defenseSpeciesBoost*armorMultiplier;
 
   const hits=final>0?Math.ceil(hp/final):null;
 
@@ -228,7 +265,8 @@ function compute(attSide,defSide){
     afterPart,
     final,
     hits,
-    hp
+    hp,
+    armorMultiplier
   };
 }
 
@@ -285,4 +323,4 @@ function resetAll(){
   calculate();
 }
 
-init().catch(err=>{console.error(err);document.querySelector("main").insertAdjacentHTML("afterend",'<p class="notice" style="margin-top:12px;">恐竜データを読み込めませんでした。dinosaurs.json を確認してください。</p>');});
+init().catch(err=>{console.error(err);document.querySelector("main").insertAdjacentHTML("afterend",'<p class="notice" style="margin-top:12px;">恐竜データを読み込めませんでした。dinosaurs.json を確認してください。</p>')});

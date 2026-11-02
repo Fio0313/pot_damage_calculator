@@ -1,246 +1,11 @@
 [
   {
-    "name": "ランフォリンクス",
-    "english": "Rhamphorhynchus",
-    "hp": 400,
-    "weight": 500,
-    "attack": 0,
-    "initialArmor": 1.0,
-    "notes": "基本攻撃力は提示されたWiki表を初期値として登録。追加効果は別途確認。"
-  },
-  {
-    "name": "デイノニクス",
-    "english": "Deinonychus",
-    "hp": 550,
-    "weight": 1000,
-    "attack": 50,
-    "initialArmor": 1.0,
-    "notes": "基本攻撃力は提示されたWiki表を初期値として登録。追加効果は別途確認。"
-  },
-  {
-    "name": "ラテニヴェナトリクス",
-    "english": "Latenivenatrix",
-    "hp": 400,
-    "weight": 1400,
-    "attack": 40,
-    "initialArmor": 1.0,
-    "notes": "基本攻撃力は提示されたWiki表を初期値として登録。追加効果は別途確認。"
-  },
-  {
-    "name": "ストルティオミムス",
-    "english": "Struthiomimus",
-    "hp": 450,
-    "weight": 1400,
-    "attack": 50,
-    "initialArmor": 1.0,
-    "notes": "基本攻撃力は提示されたWiki表を初期値として登録。追加効果は別途確認。"
-  },
-  {
-    "name": "カンプトサウルス",
-    "english": "Camptosaurus",
-    "hp": 700,
-    "weight": 1600,
-    "attack": 30,
-    "initialArmor": 1.0,
-    "notes": "基本攻撃力は提示されたWiki表を初期値として登録。追加効果は別途確認。"
-  },
-  {
-    "name": "タラソドロメウス",
-    "english": "Thalassodromeus",
-    "hp": 500,
-    "weight": 1900,
-    "attack": 40,
-    "initialArmor": 1.0,
-    "notes": "基本攻撃力は提示されたWiki表を初期値として登録。追加効果は別途確認。"
-  },
-  {
-    "name": "パキケファロサウルス",
-    "english": "Pachycephalosaurus",
-    "hp": 500,
-    "weight": 2000,
-    "attack": 60,
-    "initialArmor": 1.0,
-    "notes": "基本攻撃力は提示されたWiki表を初期値として登録。追加効果は別途確認。"
-  },
-  {
-    "name": "コンカベナトール",
-    "english": "Concavenator",
-    "hp": 500,
-    "weight": 2100,
-    "attack": 50,
-    "initialArmor": 1.0,
-    "notes": "基本攻撃力は提示されたWiki表を初期値として登録。追加効果は別途確認。"
-  },
-  {
     "name": "アキロバトール",
     "english": "Achillobator",
     "hp": 550,
     "weight": 2200,
     "attack": 55,
-    "initialArmor": 1.0,
-    "notes": "基本攻撃力は提示されたWiki表を初期値として登録。追加効果は別途確認。"
-  },
-  {
-    "name": "スティラコサウルス",
-    "english": "Styracosaurus",
-    "hp": 600,
-    "weight": 2200,
-    "attack": 50,
-    "initialArmor": 1.0,
-    "notes": "基本攻撃力は提示されたWiki表を初期値として登録。追加効果は別途確認。"
-  },
-  {
-    "name": "アリオラムス",
-    "english": "Alioramus",
-    "hp": 425,
-    "weight": 2400,
-    "attack": 45,
-    "initialArmor": 1.0,
-    "notes": "基本攻撃力は提示されたWiki表を初期値として登録。追加効果は別途確認。"
-  },
-  {
-    "name": "メガロニア",
-    "english": "Megalania",
-    "hp": 525,
-    "weight": 2400,
-    "attack": 35,
-    "initialArmor": 1.0,
-    "notes": "基本攻撃力は提示されたWiki表を初期値として登録。追加効果は別途確認。"
-  },
-  {
-    "name": "ケラトサウルス",
-    "english": "Ceratosaurus",
-    "hp": 600,
-    "weight": 2500,
-    "attack": 40,
-    "initialArmor": 1.0,
-    "notes": "基本攻撃力は提示されたWiki表を初期値として登録。追加効果は別途確認。"
-  },
-  {
-    "name": "ケントロサウルス",
-    "english": "Kentrosaurus",
-    "hp": 550,
-    "weight": 2500,
-    "attack": 40,
-    "initialArmor": 1.0,
-    "notes": "基本攻撃力は提示されたWiki表を初期値として登録。追加効果は別途確認。"
-  },
-  {
-    "name": "エウリノサウルス",
-    "english": "Eurhinosaurus",
-    "hp": 600,
-    "weight": 3100,
-    "attack": 40,
-    "initialArmor": 1.0,
-    "notes": "基本攻撃力は提示されたWiki表を初期値として登録。追加効果は別途確認。"
-  },
-  {
-    "name": "ハツェゴプテリクス",
-    "english": "Hatzegopteryx",
-    "hp": 575,
-    "weight": 3100,
-    "attack": 60,
-    "initialArmor": 1.0,
-    "notes": "基本攻撃力は提示されたWiki表を初期値として登録。追加効果は別途確認。"
-  },
-  {
-    "name": "メトリアカントサウルス",
-    "english": "Metriacanthosaurus",
-    "hp": 500,
-    "weight": 3100,
-    "attack": 25,
-    "initialArmor": 1.0,
-    "notes": "基本攻撃力は提示されたWiki表を初期値として登録。追加効果は別途確認。"
-  },
-  {
-    "name": "アルベルタケラトプス",
-    "english": "Albertaceratops",
-    "hp": 600,
-    "weight": 3500,
-    "attack": 40,
-    "initialArmor": 1.0,
-    "notes": "基本攻撃力は提示されたWiki表を初期値として登録。追加効果は別途確認。"
-  },
-  {
-    "name": "アロサウルス",
-    "english": "Allosaurus",
-    "hp": 650,
-    "weight": 3500,
-    "attack": 50,
-    "initialArmor": 1.0,
-    "notes": "基本攻撃力は提示されたWiki表を初期値として登録。追加効果は別途確認。"
-  },
-  {
-    "name": "ダスプレトサウルス",
-    "english": "Daspletosaurus",
-    "hp": 600,
-    "weight": 3500,
-    "attack": 60,
-    "initialArmor": 1.0,
-    "notes": "基本攻撃力は提示されたWiki表を初期値として登録。追加効果は別途確認。"
-  },
-  {
-    "name": "カイウェケア",
-    "english": "Kaiwhekea",
-    "hp": 750,
-    "weight": 3500,
-    "attack": 40,
-    "initialArmor": 1.0,
-    "notes": "基本攻撃力は提示されたWiki表を初期値として登録。追加効果は別途確認。"
-  },
-  {
-    "name": "ランベオサウルス",
-    "english": "Lambeosaurus",
-    "hp": 525,
-    "weight": 3500,
-    "attack": 30,
-    "initialArmor": 1.0,
-    "notes": "基本攻撃力は提示されたWiki表を初期値として登録。追加効果は別途確認。"
-  },
-  {
-    "name": "ミラガイア",
-    "english": "Miragaia",
-    "hp": 650,
-    "weight": 3500,
-    "attack": 55,
-    "initialArmor": 1.0,
-    "notes": "基本攻撃力は提示されたWiki表を初期値として登録。追加効果は別途確認。"
-  },
-  {
-    "name": "ピクノネモサウルス",
-    "english": "Pycnonemosaurus",
-    "hp": 550,
-    "weight": 3500,
-    "attack": 50,
-    "initialArmor": 1.0,
-    "notes": "基本攻撃力は提示されたWiki表を初期値として登録。追加効果は別途確認。"
-  },
-  {
-    "name": "アマルガサウルス",
-    "english": "Amargasaurus",
-    "hp": 800,
-    "weight": 4000,
-    "attack": 40,
-    "initialArmor": 1.0,
-    "notes": "基本攻撃力は提示されたWiki表を初期値として登録。追加効果は別途確認。"
-  },
-  {
-    "name": "イグアノドン",
-    "english": "Iguanodon",
-    "hp": 750,
-    "weight": 4000,
-    "attack": 40,
-    "initialArmor": 1.0,
-    "notes": "基本攻撃力は提示されたWiki表を初期値として登録。追加効果は別途確認。"
-  },
-  {
-    "name": "スコミムス",
-    "english": "Suchomimus",
-    "hp": 700,
-    "weight": 4250,
-    "attack": 40,
-    "initialArmor": 1.0,
-    "notes": "基本攻撃力は提示されたWiki表を初期値として登録。追加効果は別途確認。"
+    "initialArmor": 1.0
   },
   {
     "name": "アノドントサウルス",
@@ -248,53 +13,55 @@
     "hp": 775,
     "weight": 4500,
     "attack": 55,
-    "initialArmor": 1.0,
-    "notes": "基本攻撃力は提示されたWiki表を初期値として登録。追加効果は別途確認。"
+    "initialArmor": 1.0
   },
   {
-    "name": "デイノケイルス",
-    "english": "Deinocheirus",
-    "hp": 850,
-    "weight": 4500,
+    "name": "アマルガサウルス",
+    "english": "Amargasaurus",
+    "hp": 800,
+    "weight": 4000,
+    "attack": 40,
+    "initialArmor": 1.0
+  },
+  {
+    "name": "アリオラムス",
+    "english": "Alioramus",
+    "hp": 425,
+    "weight": 2400,
     "attack": 45,
-    "initialArmor": 1.1,
-    "notes": "基本攻撃力は提示されたWiki表を初期値として登録。追加効果は別途確認。"
+    "initialArmor": 1.0
   },
   {
-    "name": "サルコスクス",
-    "english": "Sarcosuchus",
+    "name": "アルベルタケラトプス",
+    "english": "Albertaceratops",
     "hp": 600,
-    "weight": 4500,
+    "weight": 3500,
+    "attack": 40,
+    "initialArmor": 1.0
+  },
+  {
+    "name": "アロサウルス",
+    "english": "Allosaurus",
+    "hp": 650,
+    "weight": 3500,
     "attack": 50,
-    "initialArmor": 1.0,
-    "notes": "基本攻撃力は提示されたWiki表を初期値として登録。追加効果は別途確認。"
+    "initialArmor": 1.0
   },
   {
-    "name": "ティロサウルス",
-    "english": "Tylosaurus",
-    "hp": 900,
-    "weight": 4500,
-    "attack": 60,
-    "initialArmor": 1.0,
-    "notes": "基本攻撃力は提示されたWiki表を初期値として登録。追加効果は別途確認。"
+    "name": "イグアノドン",
+    "english": "Iguanodon",
+    "hp": 750,
+    "weight": 4000,
+    "attack": 40,
+    "initialArmor": 1.0
   },
   {
-    "name": "ステゴサウルス",
-    "english": "Stegosaurus",
+    "name": "エウリノサウルス",
+    "english": "Eurhinosaurus",
     "hp": 600,
-    "weight": 4500,
-    "attack": 55,
-    "initialArmor": 1.0,
-    "notes": "基本攻撃力は提示されたWiki表を初期値として登録。追加効果は別途確認。"
-  },
-  {
-    "name": "バルスボルディア",
-    "english": "Barsboldia",
-    "hp": 950,
-    "weight": 5500,
-    "attack": 30,
-    "initialArmor": 1.1,
-    "notes": "基本攻撃力は提示されたWiki表を初期値として登録。追加効果は別途確認。"
+    "weight": 3100,
+    "attack": 40,
+    "initialArmor": 1.0
   },
   {
     "name": "エオトリケラトプス",
@@ -302,17 +69,87 @@
     "hp": 800,
     "weight": 5500,
     "attack": 55,
-    "initialArmor": 1.1,
-    "notes": "基本攻撃力は提示されたWiki表を初期値として登録。追加効果は別途確認。"
+    "initialArmor": 1.1
   },
   {
-    "name": "リーズイクティス",
-    "english": "Loochy",
-    "hp": 1100,
-    "weight": 5500,
+    "name": "カイウェケア",
+    "english": "Kaiwhekea",
+    "hp": 750,
+    "weight": 3500,
+    "attack": 40,
+    "initialArmor": 1.0
+  },
+  {
+    "name": "カンプトサウルス",
+    "english": "Camptosaurus",
+    "hp": 700,
+    "weight": 1600,
+    "attack": 30,
+    "initialArmor": 1.0
+  },
+  {
+    "name": "ケラトサウルス",
+    "english": "Ceratosaurus",
+    "hp": 600,
+    "weight": 2500,
+    "attack": 40,
+    "initialArmor": 1.0
+  },
+  {
+    "name": "ケントロサウルス",
+    "english": "Kentrosaurus",
+    "hp": 550,
+    "weight": 2500,
+    "attack": 40,
+    "initialArmor": 1.0
+  },
+  {
+    "name": "コンカベナトール",
+    "english": "Concavenator",
+    "hp": 500,
+    "weight": 2100,
+    "attack": 50,
+    "initialArmor": 1.0
+  },
+  {
+    "name": "サルコスクス",
+    "english": "Sarcosuchus",
+    "hp": 600,
+    "weight": 4500,
+    "attack": 50,
+    "initialArmor": 1.0
+  },
+  {
+    "name": "スコミムス",
+    "english": "Suchomimus",
+    "hp": 700,
+    "weight": 4250,
+    "attack": 40,
+    "initialArmor": 1.0
+  },
+  {
+    "name": "スティラコサウルス",
+    "english": "Styracosaurus",
+    "hp": 600,
+    "weight": 2200,
+    "attack": 50,
+    "initialArmor": 1.0
+  },
+  {
+    "name": "ステゴサウルス",
+    "english": "Stegosaurus",
+    "hp": 600,
+    "weight": 4500,
     "attack": 55,
-    "initialArmor": 1.25,
-    "notes": "基本攻撃力は提示されたWiki表を初期値として登録。追加効果は別途確認。"
+    "initialArmor": 1.0
+  },
+  {
+    "name": "ストルティオミムス",
+    "english": "Struthiomimus",
+    "hp": 450,
+    "weight": 1400,
+    "attack": 50,
+    "initialArmor": 1.0
   },
   {
     "name": "スピノサウルス",
@@ -320,8 +157,39 @@
     "hp": 900,
     "weight": 5500,
     "attack": 50,
-    "initialArmor": 1.1,
-    "notes": "基本攻撃力は提示されたWiki表を初期値として登録。追加効果は別途確認。"
+    "initialArmor": 1.1
+  },
+  {
+    "name": "ダスプレトサウルス",
+    "english": "Daspletosaurus",
+    "hp": 600,
+    "weight": 3500,
+    "attack": 60,
+    "initialArmor": 1.0
+  },
+  {
+    "name": "タラソドロメウス",
+    "english": "Thalassodromeus",
+    "hp": 500,
+    "weight": 1900,
+    "attack": 40,
+    "initialArmor": 1.0
+  },
+  {
+    "name": "デイノケイルス",
+    "english": "Deinocheirus",
+    "hp": 850,
+    "weight": 4500,
+    "attack": 45,
+    "initialArmor": 1.1
+  },
+  {
+    "name": "デイノニクス",
+    "english": "Deinonychus",
+    "hp": 550,
+    "weight": 1000,
+    "attack": 50,
+    "initialArmor": 1.0
   },
   {
     "name": "ティラノサウルス",
@@ -329,8 +197,7 @@
     "hp": 850,
     "weight": 5500,
     "attack": 60,
-    "initialArmor": 1.1,
-    "notes": "基本攻撃力は提示されたWiki表を初期値として登録。追加効果は別途確認。"
+    "initialArmor": 1.1
   },
   {
     "name": "ティラノタイタン",
@@ -338,7 +205,102 @@
     "hp": 800,
     "weight": 5500,
     "attack": 40,
-    "initialArmor": 1.1,
-    "notes": "基本攻撃力は提示されたWiki表を初期値として登録。追加効果は別途確認。"
+    "initialArmor": 1.1
+  },
+  {
+    "name": "ティロサウルス",
+    "english": "Tylosaurus",
+    "hp": 900,
+    "weight": 4500,
+    "attack": 60,
+    "initialArmor": 1.0
+  },
+  {
+    "name": "パキケファロサウルス",
+    "english": "Pachycephalosaurus",
+    "hp": 500,
+    "weight": 2000,
+    "attack": 60,
+    "initialArmor": 1.0
+  },
+  {
+    "name": "ピクノネモサウルス",
+    "english": "Pycnonemosaurus",
+    "hp": 550,
+    "weight": 3500,
+    "attack": 50,
+    "initialArmor": 1.0
+  },
+  {
+    "name": "ハツェゴプテリクス",
+    "english": "Hatzegopteryx",
+    "hp": 575,
+    "weight": 3100,
+    "attack": 60,
+    "initialArmor": 1.0
+  },
+  {
+    "name": "バルスボルディア",
+    "english": "Barsboldia",
+    "hp": 950,
+    "weight": 5500,
+    "attack": 30,
+    "initialArmor": 1.1
+  },
+  {
+    "name": "ミラガイア",
+    "english": "Miragaia",
+    "hp": 650,
+    "weight": 3500,
+    "attack": 55,
+    "initialArmor": 1.0
+  },
+  {
+    "name": "メガロニア",
+    "english": "Megalania",
+    "hp": 525,
+    "weight": 2400,
+    "attack": 35,
+    "initialArmor": 1.0
+  },
+  {
+    "name": "メトリアカントサウルス",
+    "english": "Metriacanthosaurus",
+    "hp": 500,
+    "weight": 3100,
+    "attack": 25,
+    "initialArmor": 1.0
+  },
+  {
+    "name": "ラテニヴェナトリクス",
+    "english": "Latenivenatrix",
+    "hp": 400,
+    "weight": 1400,
+    "attack": 40,
+    "initialArmor": 1.0
+  },
+  {
+    "name": "ランフォリンクス",
+    "english": "Rhamphorhynchus",
+    "hp": 400,
+    "weight": 500,
+    "attack": 0,
+    "initialArmor": 1.0
+  },
+  {
+    "name": "ランベオサウルス",
+    "english": "Lambeosaurus",
+    "hp": 525,
+    "weight": 3500,
+    "attack": 30,
+    "initialArmor": 1.0
+  },
+  {
+    "name": "リーズイクティス",
+    "english": "Loochy",
+    "hp": 1100,
+    "weight": 5500,
+    "attack": 55,
+    "initialArmor": 1.25
   }
 ]
