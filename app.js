@@ -29,6 +29,7 @@ function loadDino(side){
   $("weight"+side).value=d.weight;
   $("wikiArmor"+side).value=d.wikiArmor;
   $("attack"+side).value=d.attack;
+  $("armor"+side).value=d.wikiArmor;
   toggleCustom(side);
   calculate();
 }
@@ -51,6 +52,13 @@ function armorDebuffMultiplier(side){
   const debuff=Math.max(0,val("armorDebuff"+side,0));
   return 1-debuff/100;
 }
+function armorMultiplier(value){
+  if(value>=1){
+    const reduction=Math.max(0, value-1);
+    return Math.max(0, 1-reduction);
+  }
+  return Math.max(0, value);
+}
 function compute(attSide,defSide){
   const attackBase=Math.max(0,val("attack"+attSide,0));
   const attackBuff=attackBuffMultiplier(attSide);
@@ -59,20 +67,20 @@ function compute(attSide,defSide){
   const attackerWeight=Math.max(0,val("weight"+attSide,0));
   const defenderWeight=Math.max(.000001,val("weight"+defSide,0));
   const body=partMultiplier(defSide);
-  const armorBase=Math.max(0,val("armor"+defSide,1));
+  const armorValue=Math.max(0,val("armor"+defSide,1));
+  const armor=armorMultiplier(armorValue);
   const armorDebuff=armorDebuffMultiplier(attSide);
-  const armor=Math.max(0,armorBase*armorDebuff);
   const weightRatio=attackerWeight/defenderWeight;
   const raw=attack*weightRatio;
   const afterPart=raw*body;
-  const final=afterPart*armor;
+  const final=afterPart*armor*armorDebuff;
   const hits=final>0?Math.ceil(hp/final):null;
-  return {weightRatio,body,armor,attackBuff,armorDebuff,raw,afterPart,final,hits,hp};
+  return {weightRatio,body,armor,armorDebuff,attackBuff,raw,afterPart,final,hits,hp};
 }
 function render(key,attacker,defender,r){
   $("name"+key).textContent=attacker+" → "+defender;
   $("damage"+key).textContent=fmt(r.final);
-  $("detail"+key).innerHTML=`体重補正：${fmt(r.weightRatio)}倍<br>部位補正：${fmt(r.body)}倍<br>装甲軽減倍率：${fmt(r.armor)}倍<br>攻撃力バフ：${fmt(r.attackBuff)}倍<br>装甲デバフ補正：${fmt(r.armorDebuff)}倍<br>補正前：${fmt(r.raw)} → 部位適用後：${fmt(r.afterPart)}`;
+  $("detail"+key).innerHTML=`体重補正：${fmt(r.weightRatio)}倍<br>部位補正：${fmt(r.body)}倍<br>鎧値補正：${fmt(r.armor)}倍<br>攻撃力バフ：${fmt(r.attackBuff)}倍<br>装甲デバフ補正：${fmt(r.armorDebuff)}倍<br>補正前：${fmt(r.raw)} → 部位適用後：${fmt(r.afterPart)}`;
   $("hits"+key).textContent=r.hits===null?"撃破できません（ダメージ0）":`撃破まで ${fmt(r.hits)} 発（対象HP：${fmt(r.hp)}）`;
 }
 function calculate(){
@@ -84,7 +92,7 @@ function calculate(){
 function resetAll(){
   ["A","B"].forEach(side=>{
     loadDino(side);
-    $("armor"+side).value="1.00";
+    $("armor"+side).value=$("wikiArmor"+side).value;
     $("custom"+side).value="0.00";
     $("armorDebuff"+side).value="0";
     ["attackBuff1","attackBuff2","attackBuff3"].forEach(key=>{$(key+side).value="0";});
