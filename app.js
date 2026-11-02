@@ -195,6 +195,17 @@ function defenseDebuffTotal(side){
 }
 
 // ============================
+// 関数名 : initialArmorMultiplier
+// 引数 : side (文字列: "A" または "B")
+// 戻り値: number (初期鎧値のダメージ減少倍率)
+// 説明 : 初期鎧値 1.1 は 10% 鎧なので被ダメージを ×0.9 に軽減する
+// ============================
+function initialArmorMultiplier(side){
+  const armor=val("initialArmor"+side,1);
+  return Math.max(0, 2 - armor);
+}
+
+// ============================
 // 関数名 : partMultiplier
 // 引数 : side (文字列: "A" または "B")
 // 戻り値: number (部位倍率)
@@ -226,6 +237,7 @@ function compute(attSide,defSide){
   const attackDebuff=attackDebuffTotal(attSide);
   const defenseBuff=defenseBuffTotal(defSide);
   const defenseDebuff=defenseDebuffTotal(defSide);
+  const armorMultiplier=initialArmorMultiplier(defSide);
 
   const attackSpeciesBoost=speciesMultiplierForRole(attSide,"attack");
   const defenseSpeciesBoost=speciesMultiplierForRole(defSide,"defense");
@@ -235,10 +247,10 @@ function compute(attSide,defSide){
   const afterPart=raw*body;
 
   const attackModifier=attackBuff*attackDebuff*attackSpeciesBoost;
-  const defenseModifier=defenseBuff*defenseDebuff*defenseSpeciesBoost;
+  const defenseModifier=defenseBuff*defenseDebuff*defenseSpeciesBoost*armorMultiplier;
   const totalMultiplier=attackModifier*weightRatio*body*defenseModifier;
 
-  const final=afterPart*defenseBuff*defenseDebuff*attackDebuff*defenseSpeciesBoost;
+  const final=afterPart*defenseBuff*defenseDebuff*attackDebuff*defenseSpeciesBoost*armorMultiplier;
 
   const hits=final>0?Math.ceil(hp/final):null;
 
@@ -253,7 +265,8 @@ function compute(attSide,defSide){
     afterPart,
     final,
     hits,
-    hp
+    hp,
+    armorMultiplier
   };
 }
 
