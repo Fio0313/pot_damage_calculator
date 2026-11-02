@@ -30,9 +30,9 @@
         <label>恐竜を選択<select id="dinoA"></select></label>
 
         <div class="editable-stats">
-          <label>体力<input id="hpA" type="number" min="0" step="any"></label>
-          <label>体重<input id="weightA" type="number" min="0.01" step="any"></label>
-          <label>初期鎧値<input id="initialArmorA" type="number" min="0" step="any"></label>
+          <label>体力<input id="hpA" type="number" min="0" step="10"></label>
+          <label>体重<input id="weightA" type="number" min="0" step="100"></label>
+          <label>初期鎧値<input id="initialArmorA" type="number" min="0" step="0.1"></label>
         </div>
 
         <div class="species-inline">
@@ -45,7 +45,7 @@
           </label>
 
           <label class="species-field">種族補正倍率（%）
-            <input id="speciesBonusA" type="number" min="-100" max="100" step="0.1" value="0" disabled>
+            <input id="speciesBonusA" type="number" min="-100" max="100" step="1" value="0" disabled>
           </label>
         </div>
       </div>
@@ -53,17 +53,17 @@
       <div class="panel">
         <div class="panel-head">攻撃側の補正</div>
 
-        <label>攻撃力（手入力で変更可能）<input id="attackA" type="number" min="0" step="any"></label>
+        <label>攻撃力（手入力で変更可能）<input id="attackA" type="number" min="0" step="1"></label>
 
         <div class="buff-stack">
-          <label>攻撃バフ1（%）<input id="attackBuff1A" type="number" min="0" step="0.1" value="0"></label>
-          <label>攻撃バフ2（%）<input id="attackBuff2A" type="number" min="0" step="0.1" value="0"></label>
-          <label>攻撃バフ3（%）<input id="attackBuff3A" type="number" min="0" step="0.1" value="0"></label>
+          <label>攻撃バフ1（%）<input id="attackBuff1A" type="number" min="0" step="1" value="0"></label>
+          <label>攻撃バフ2（%）<input id="attackBuff2A" type="number" min="0" step="1" value="0"></label>
+          <label>攻撃バフ3（%）<input id="attackBuff3A" type="number" min="0" step="1" value="0"></label>
         </div>
 
         <div class="buff-stack">
-          <label>攻撃デバフ1（%）<input id="attackDebuff1A" type="number" min="0" step="0.1" value="0"></label>
-          <label>攻撃デバフ2（%）<input id="attackDebuff2A" type="number" min="0" step="0.1" value="0"></label>
+          <label>攻撃デバフ1（%）<input id="attackDebuff1A" type="number" min="0" step="1" value="0"></label>
+          <label>攻撃デバフ2（%）<input id="attackDebuff2A" type="number" min="0" step="1" value="0"></label>
         </div>
       </div>
 
@@ -71,14 +71,14 @@
         <div class="panel-head">防御側の補正（Aが攻撃を受ける場合）</div>
 
         <div class="buff-stack">
-          <label>防御バフ1（アーマー%）<input id="defenseBuff1A" type="number" min="0" step="0.1" value="0"></label>
-          <label>防御バフ2（アーマー%）<input id="defenseBuff2A" type="number" min="0" step="0.1" value="0"></label>
-          <label>防御バフ3（アーマー%）<input id="defenseBuff3A" type="number" min="0" step="0.1" value="0"></label>
+          <label>防御バフ1（アーマー%）<input id="defenseBuff1A" type="number" min="0" step="1" value="0"></label>
+          <label>防御バフ2（アーマー%）<input id="defenseBuff2A" type="number" min="0" step="1" value="0"></label>
+          <label>防御バフ3（アーマー%）<input id="defenseBuff3A" type="number" min="0" step="1" value="0"></label>
         </div>
 
         <div class="buff-stack">
-          <label>防御デバフ1（%）<input id="defenseDebuff1A" type="number" min="0" step="0.1" value="0"></label>
-          <label>防御デバフ2（%）<input id="defenseDebuff2A" type="number" min="0" step="0.1" value="0"></label>
+          <label>防御デバフ1（%）<input id="defenseDebuff1A" type="number" min="0" step="1" value="0"></label>
+          <label>防御デバフ2（%）<input id="defenseDebuff2A" type="number" min="0" step="1" value="0"></label>
         </div>
       </div>
 
@@ -105,9 +105,9 @@
         <label>恐竜を選択<select id="dinoB"></select></label>
 
         <div class="editable-stats">
-          <label>体力<input id="hpB" type="number" min="0" step="any"></label>
-          <label>体重<input id="weightB" type="number" min="0.01" step="any"></label>
-          <label>初期鎧値<input id="initialArmorB" type="number" min="0" step="any"></label>
+          <label>体力<input id="hpB" type="number" min="0" step="10"></label>
+          <label>体重<input id="weightB" type="number" min="0" step="100"></label>
+          <label>初期鎧値<input id="initialArmorB" type="number" min="0" step="0.1"></label>
         </div>
 
         <div class="species-inline">
@@ -120,7 +120,7 @@
           </label>
 
           <label class="species-field">種族補正倍率（%）
-            <input id="speciesBonusB" type="number" min="-100" max="100" step="0.1" value="0" disabled>
+            <input id="speciesBonusB" type="number" min="-100" max="100" step="1" value="0" disabled>
           </label>
         </div>
       </div>
@@ -131,14 +131,14 @@
         <label>攻撃力（手入力で変更可能）<input id="attackB" type="number" min="0" step="any"></label>
 
         <div class="buff-stack">
-          <label>攻撃バフ1（%）<input id="attackBuff1B" type="number" min="0" step="0.1" value="0"></label>
-          <label>攻撃バフ2（%）<input id="attackBuff2B" type="number" min="0" step="0.1" value="0"></label>
-          <label>攻撃バフ3（%）<input id="attackBuff3B" type="number" min="0" step="0.1" value="0"></label>
+          <label>攻撃バフ1（%）<input id="attackBuff1B" type="number" min="0" step="1" value="0"></label>
+          <label>攻撃バフ2（%）<input id="attackBuff2B" type="number" min="0" step="1" value="0"></label>
+          <label>攻撃バフ3（%）<input id="attackBuff3B" type="number" min="0" step="1" value="0"></label>
         </div>
 
         <div class="buff-stack">
-          <label>攻撃デバフ1（%）<input id="attackDebuff1B" type="number" min="0" step="0.1" value="0"></label>
-          <label>攻撃デバフ2（%）<input id="attackDebuff2B" type="number" min="0" step="0.1" value="0"></label>
+          <label>攻撃デバフ1（%）<input id="attackDebuff1B" type="number" min="0" step="1" value="0"></label>
+          <label>攻撃デバフ2（%）<input id="attackDebuff2B" type="number" min="0" step="1" value="0"></label>
         </div>
       </div>
 
@@ -146,14 +146,14 @@
         <div class="panel-head">防御側の補正（Bが攻撃を受ける場合）</div>
 
         <div class="buff-stack">
-          <label>防御バフ1（アーマー%）<input id="defenseBuff1B" type="number" min="0" step="0.1" value="0"></label>
-          <label>防御バフ2（アーマー%）<input id="defenseBuff2B" type="number" min="0" step="0.1" value="0"></label>
-          <label>防御バフ3（アーマー%）<input id="defenseBuff3B" type="number" min="0" step="0.1" value="0"></label>
+          <label>防御バフ1（アーマー%）<input id="defenseBuff1B" type="number" min="0" step="1" value="0"></label>
+          <label>防御バフ2（アーマー%）<input id="defenseBuff2B" type="number" min="0" step="1" value="0"></label>
+          <label>防御バフ3（アーマー%）<input id="defenseBuff3B" type="number" min="0" step="1" value="0"></label>
         </div>
 
         <div class="buff-stack">
-          <label>防御デバフ1（%）<input id="defenseDebuff1B" type="number" min="0" step="0.1" value="0"></label>
-          <label>防御デバフ2（%）<input id="defenseDebuff2B" type="number" min="0" step="0.1" value="0"></label>
+          <label>防御デバフ1（%）<input id="defenseDebuff1B" type="number" min="0" step="1" value="0"></label>
+          <label>防御デバフ2（%）<input id="defenseDebuff2B" type="number" min="0" step="1" value="0"></label>
         </div>
       </div>
 
