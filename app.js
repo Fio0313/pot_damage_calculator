@@ -29,7 +29,8 @@ function loadDino(side){
   $("weight"+side).value=d.weight;
   $("wikiArmor"+side).value=d.wikiArmor;
   $("attack"+side).value=d.attack;
-  $("armor"+side).value=d.wikiArmor;
+  const defaultArmorPercent=Math.max(0, (Number(d.wikiArmor)||1)-1)*100;
+  $("armor"+side).value=defaultArmorPercent;
   toggleCustom(side);
   calculate();
 }
@@ -48,16 +49,13 @@ function attackBuffMultiplier(side){
   const buffs=[1,2,3].map(index=>1+Math.max(0,val(`attackBuff${index}${side}`,0))/100);
   return buffs.reduce((total, multiplier)=>total*multiplier, 1);
 }
-function armorDebuffMultiplier(side){
-  const debuff=Math.max(0,val("armorDebuff"+side,0));
-  return 1-debuff/100;
+function armorReductionMultiplier(side){
+  const reductionPct=Math.max(0,val("armor"+side,0));
+  return Math.max(0, 1 - reductionPct/100);
 }
-function armorMultiplier(value){
-  if(value>=1){
-    const reduction=Math.max(0, value-1);
-    return Math.max(0, 1-reduction);
-  }
-  return Math.max(0, value);
+function armorDebuffMultiplier(side){
+  const reductionPct=Math.max(0,val("armorDebuff"+side,0));
+  return Math.max(0, 1 - reductionPct/100);
 }
 function compute(attSide,defSide){
   const attackBase=Math.max(0,val("attack"+attSide,0));
@@ -67,8 +65,7 @@ function compute(attSide,defSide){
   const attackerWeight=Math.max(0,val("weight"+attSide,0));
   const defenderWeight=Math.max(.000001,val("weight"+defSide,0));
   const body=partMultiplier(defSide);
-  const armorValue=Math.max(0,val("armor"+defSide,1));
-  const armor=armorMultiplier(armorValue);
+  const armor=armorReductionMultiplier(defSide);
   const armorDebuff=armorDebuffMultiplier(attSide);
   const weightRatio=attackerWeight/defenderWeight;
   const raw=attack*weightRatio;
@@ -80,7 +77,9 @@ function compute(attSide,defSide){
 function render(key,attacker,defender,r){
   $("name"+key).textContent=attacker+" → "+defender;
   $("damage"+key).textContent=fmt(r.final);
-  $("detail"+key).innerHTML=`体重補正：${fmt(r.weightRatio)}倍<br>部位補正：${fmt(r.body)}倍<br>鎧値補正：${fmt(r.armor)}倍<br>攻撃力バフ：${fmt(r.attackBuff)}倍<br>装甲デバフ補正：${fmt(r.armorDebuff)}倍<br>補正前：${fmt(r.raw)} → 部位適用後：${fmt(r.afterPart)}`;
+  const armorReductionPct=Math.max(0, (1-r.armor)*100);
+  const armorDebuffPct=Math.max(0, (1-r.armorDebuff)*100);
+  $("detail"+key).innerHTML=`体重補正：${fmt(r.weightRatio)}倍<br>部位補正：${fmt(r.body)}倍<br>装甲軽減：${fmt(armorReductionPct)}%<br>攻撃力バフ：${fmt((r.attackBuff-1)*100+100)}%<br>装甲デバフ：${fmt(armorDebuffPct)}%<br>補正前：${fmt(r.raw)} → 部位適用後：${fmt(r.afterPart)}`;
   $("hits"+key).textContent=r.hits===null?"撃破できません（ダメージ0）":`撃破まで ${fmt(r.hits)} 発（対象HP：${fmt(r.hp)}）`;
 }
 function calculate(){
@@ -92,7 +91,7 @@ function calculate(){
 function resetAll(){
   ["A","B"].forEach(side=>{
     loadDino(side);
-    $("armor"+side).value=$("wikiArmor"+side).value;
+    $("armor"+side).value=Math.max(0, (Number($("wikiArmor"+side).value)||1)-1)*100;
     $("custom"+side).value="0.00";
     $("armorDebuff"+side).value="0";
     ["attackBuff1","attackBuff2","attackBuff3"].forEach(key=>{$(key+side).value="0";});
@@ -102,4 +101,3 @@ function resetAll(){
   calculate();
 }
 init().catch(err=>{document.querySelector("main").insertAdjacentHTML("afterbegin",`<p class="notice">恐竜データを読み込めませんでした。index.html と dinosaurs.json を同じフォルダに配置してください。</p>`);console.error(err);});
-
