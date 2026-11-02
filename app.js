@@ -155,8 +155,9 @@ function speciesMultiplierForRole(side, role){
 // 説明 : 攻撃力バフ1〜3の合計をまとめて倍率に変換する
 // ============================
 function attackBuffTotal(side){
-  const sum=val("attackBuff1"+side,0)+val("attackBuff2"+side,0)+val("attackBuff3"+side,0);
-  return 1 + sum/100;
+  return (1 + val("attackBuff1"+side,0) / 100)
+       * (1 + val("attackBuff2"+side,0) / 100)
+       * (1 + val("attackBuff3"+side,0) / 100);
 }
 
 // ============================
@@ -166,8 +167,8 @@ function attackBuffTotal(side){
 // 説明 : 攻撃デバフ1〜2の合計をまとめて倍率に変換する
 // ============================
 function attackDebuffTotal(side){
-  const sum=val("attackDebuff1"+side,0)+val("attackDebuff2"+side,0);
-  return 1 - sum/100;
+  return (1 - val("attackDebuff1"+side,0) / 100)
+       * (1 - val("attackDebuff2"+side,0) / 100);
 }
 
 // ============================
@@ -177,8 +178,9 @@ function attackDebuffTotal(side){
 // 説明 : 防御バフ1〜3の合計をまとめて倍率に変換する。アーマー%はダメージ減少として扱う
 // ============================
 function defenseBuffTotal(side){
-  const sum=val("defenseBuff1"+side,0)+val("defenseBuff2"+side,0)+val("defenseBuff3"+side,0);
-  return 1 - sum/100;
+  return Math.max(0, 1 - val("defenseBuff1"+side,0) / 100)
+       * Math.max(0, 1 - val("defenseBuff2"+side,0) / 100)
+       * Math.max(0, 1 - val("defenseBuff3"+side,0) / 100);
 }
 
 // ============================
@@ -188,8 +190,8 @@ function defenseBuffTotal(side){
 // 説明 : 防御デバフ1〜2の合計をまとめて倍率に変換する
 // ============================
 function defenseDebuffTotal(side){
-  const sum=val("defenseDebuff1"+side,0)+val("defenseDebuff2"+side,0);
-  return 1 - sum/100;
+  return (1 + val("defenseDebuff1"+side,0) / 100)
+       * (1 + val("defenseDebuff2"+side,0) / 100);
 }
 
 // ============================
