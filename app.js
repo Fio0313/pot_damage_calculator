@@ -1,7 +1,10 @@
-let dinosaurs=[];
-const $=id=>document.getElementById(id);
-const fmt=n=>Number.isFinite(n)?n.toLocaleString("ja-JP",{maximumFractionDigits:2}):"—";
-const val=(id,fallback=0)=>{const raw=$(id).value;const n=Number(raw);return Number.isFinite(n)&&raw.trim()!==""?n:fallback;};
+const $ = (id) => document.getElementById(id);
+const fmt = (n) => Number.isFinite(n) ? n.toLocaleString("ja-JP", { maximumFractionDigits: 2 }) : "—";
+const val = (id, fallback = 0) => {
+  const raw = $(id).value;
+  const n = Number(raw);
+  return Number.isFinite(n) && raw.trim() !== "" ? n : fallback;
+};
 
 // ============================
 // 関数名 : init

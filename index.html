@@ -1,103 +1,189 @@
 <!doctype html>
 <html lang="ja">
 <head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Path of Titans ダメージ計算機</title>
-<link rel="stylesheet" href="style.css">
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Path of Titans ダメージ計算機</title>
+  <link rel="stylesheet" href="style.css">
 </head>
 <body>
-<header class="hero">
-  <div class="eyebrow">PATH OF TITANS / COMBAT TOOL</div>
-  <h1>ダメージ計算機</h1>
-  <p>恐竜同士の相互ダメージ・撃破必要回数を計算</p>
-</header>
-<main>
-  <section class="notice">
-    <strong>計算モデルについて</strong>
-    <p>HP・体重・初期鎧値・攻撃力は恐竜選択時にPotのユーザーWikiの値を初期入力します。いずれも手動で変更できます。</p>
-    <p>すべての補正入力は「%」で入力します。例：攻撃力バフ 15%、装甲軽減 20%、装甲デバフ 10%、種族攻撃ボーナス 5%。</p>
-    <p>標準部位倍率は頭1.2／胴体1.0／足・手1.0／尻尾0.25。恐竜固有補正は「個別倍率」で指定できます。</p>
-  </section>
+  <header class="hero">
+    <div class="eyebrow">PATH OF TITANS / COMBAT TOOL</div>
+    <h1>ダメージ計算機</h1>
+    <p>恐竜同士の相互ダメージ・撃破必要回数を計算</p>
+  </header>
 
-  
-  <section class="fighters">
-    <article class="fighter" id="fighterA">
-      <div class="fighter-title"><span class="tag">A</span><div><h2>恐竜A</h2></div></div>
-      <label>恐竜を選択<select id="dinoA"></select></label>
-      <div class="editable-stats">
-        <label>体力<input id="hpA" type="number" min="0" step="any"></label>
-        <label>体重<input id="weightA" type="number" min="0.01" step="any"></label>
-        <label>初期鎧値<input id="initialArmorA" type="number" min="0" step="any"></label>
-      </div>
-      <label>種族攻撃ボーナス（%）<input id="speciesAttackBonusA" type="number" min="0" max="100" step="0.1" value="0"></label>
-      <label>種族防御ボーナス（%）<input id="speciesDefenseBonusA" type="number" min="0" max="100" step="0.1" value="0"></label>
-      <label>攻撃力（手入力で変更可能）<input id="attackA" type="number" min="0" step="any"></label>
-      <div class="buff-stack">
-        <label>攻撃力バフ1（%）<input id="attackBuff1A" type="number" min="0" step="0.1" value="0"></label>
-        <label>攻撃力バフ2（%）<input id="attackBuff2A" type="number" min="0" step="0.1" value="0"></label>
-        <label>攻撃力バフ3（%）<input id="attackBuff3A" type="number" min="0" step="0.1" value="0"></label>
-      </div>
-      <label>装甲軽減率（%）<input id="armorA" type="number" min="0" max="100" step="0.1" value="0">
-        <small class="help">例：25%なら 0.75 倍で計算。種族防御ボーナスや鎧補正もここに入れます</small></label>
-      <label>装甲デバフ（%）<input id="armorDebuffA" type="number" min="0" max="100" step="0.1" value="0">
-        <small class="help">例：20%なら相手の装甲軽減効果を 20% 減らします</small></label>
+  <main>
+    <section class="notice">
+      <strong>計算モデルについて</strong>
+      <p>HP・体重・初期鎧値・攻撃力は恐竜選択時に Pot のユーザーWikiの値を初期入力します。いずれも手動で変更できます。</p>
+      <p>すべての補正入力は「%」で入力します。例：攻撃力バフ 15%、装甲軽減 20%、装甲デバフ 10%、種族補正 5%。</p>
+      <p>標準部位倍率は頭1.2／胴体1.0／足・手1.0／尻尾0.25。恐竜固有補正は「個別倍率」で指定できます。</p>
+    </section>
 
-      <div class="section-label">被弾部位補正（Aが攻撃を受ける場合）</div>
-      <div class="part-grid" id="partsA">
-        <label><input type="radio" name="partA" value="head">頭 <b>1.2倍</b></label>
-        <label><input type="radio" name="partA" value="body" checked>胴体 <b>1.0倍</b></label>
-        <label><input type="radio" name="partA" value="limb">足・手 <b>1.0倍</b></label>
-        <label><input type="radio" name="partA" value="tail">尻尾 <b>0.25倍</b></label>
-        <label><input type="radio" name="partA" value="custom">その他 <b>手入力</b></label>
-      </div>
-      <label class="custom-wrap hidden" id="customWrapA">個別倍率<input id="customA" type="number" min="0" step="0.01" value="0.00"></label>
-    </article>
+    <section class="fighters">
+      <article class="fighter" id="fighterA">
+        <div class="fighter-title">
+          <span class="tag">A</span>
+          <div><h2>恐竜A</h2></div>
+        </div>
 
-    <div class="versus">VS</div>
+        <label>恐竜を選択
+          <select id="dinoA"></select>
+        </label>
 
-    <article class="fighter" id="fighterB">
-      <div class="fighter-title"><span class="tag tag-b">B</span><div><h2>恐竜B</h2></div></div>
-      <label>恐竜を選択<select id="dinoB"></select></label>
-      <div class="editable-stats">
-        <label>体力<input id="hpB" type="number" min="0" step="any"></label>
-        <label>体重<input id="weightB" type="number" min="0.01" step="any"></label>
-        <label>初期鎧値<input id="initialArmorB" type="number" min="0" step="any"></label>
-      </div>
-      <label>攻撃力（手入力で変更可能）<input id="attackB" type="number" min="0" step="any"></label>
-      <div class="buff-stack">
-        <label>攻撃力バフ1（%）<input id="attackBuff1B" type="number" min="0" step="0.1" value="0"></label>
-        <label>攻撃力バフ2（%）<input id="attackBuff2B" type="number" min="0" step="0.1" value="0"></label>
-        <label>攻撃力バフ3（%）<input id="attackBuff3B" type="number" min="0" step="0.1" value="0"></label>
-      </div>
-      <label>種族攻撃ボーナス（%）<input id="speciesAttackBonusB" type="number" min="0" max="100" step="0.1" value="0"></label>
-      <label>装甲デバフ（%）<input id="armorDebuffB" type="number" min="0" max="100" step="0.1" value="0">
-        <small class="help">例：20%なら相手の装甲軽減効果を 20% 減らします</small></label>
-      <label>装甲軽減率（%）<input id="armorB" type="number" min="0" max="100" step="0.1" value="0">
-        <small class="help">例：25%なら 0.75 倍で計算。種族防御ボーナスや鎧補正もここに入れます</small></label>
-      <label>種族防御ボーナス（%）<input id="speciesDefenseBonusB" type="number" min="0" max="100" step="0.1" value="0"></label>
-      <div class="section-label">被弾部位補正（Bが攻撃を受ける場合）</div>
-      <div class="part-grid" id="partsB">
-        <label><input type="radio" name="partB" value="head">頭 <b>1.2倍</b></label>
-        <label><input type="radio" name="partB" value="body" checked>胴体 <b>1.0倍</b></label>
-        <label><input type="radio" name="partB" value="limb">足・手 <b>1.0倍</b></label>
-        <label><input type="radio" name="partB" value="tail">尻尾 <b>0.25倍</b></label>
-        <label><input type="radio" name="partB" value="custom">その他 <b>手入力</b></label>
-      </div>
-      <label class="custom-wrap hidden" id="customWrapB">個別倍率<input id="customB" type="number" min="0" step="0.01" value="0.00"></label>
-    </article>
-  </section>
+        <div class="editable-stats">
+          <label>体力<input id="hpA" type="number" min="0" step="any"></label>
+          <label>体重<input id="weightA" type="number" min="0.01" step="any"></label>
+          <label>初期鎧値<input id="initialArmorA" type="number" min="0" step="any"></label>
+        </div>
 
-  <section class="results">
-    <div class="result-heading"><div><div class="eyebrow">CALCULATION</div><h2>相互ダメージ結果</h2></div><button id="reset" class="secondary">初期設定に戻す</button></div>
-    <div class="result-grid">
-      <article class="result-card"><div class="result-direction">A → B</div><h3 id="nameAB">—</h3><div class="damage" id="damageAB">—</div><p>1発あたりの最終ダメージ</p><div class="detail" id="detailAB"></div><div class="hits" id="hitsAB"></div></article>
-      <article class="result-card"><div class="result-direction">B → A</div><h3 id="nameBA">—</h3><div class="damage" id="damageBA">—</div><p>1発あたりの最終ダメージ</p><div class="detail" id="detailBA"></div><div class="hits" id="hitsBA"></div></article>
-    </div>
-    <p class="formula-note">基本式：攻撃力 × 攻撃力バフ合計 × 種族攻撃ボーナス ×（攻撃側体重 ÷ 防御側体重）× 被弾部位倍率 × （1 − 装甲軽減率 − 種族防御ボーナス） × （1 − 装甲デバフ率）</p>
-  </section>
-  <footer>個別補正や装甲の仕様は、ゲーム内検証に合わせて後から調整できます。</footer>
-</main>
-<script src="app.js"></script>
+        <label>種族補正
+          <select id="speciesModeA">
+            <option value="none">なし</option>
+            <option value="attack">攻撃</option>
+            <option value="defense">防御</option>
+          </select>
+        </label>
+
+        <label>種族補正倍率（%）
+          <input id="speciesBonusA" type="number" min="-100" max="100" step="0.1" value="0">
+        </label>
+
+        <label>攻撃力（手入力で変更可能）
+          <input id="attackA" type="number" min="0" step="any">
+        </label>
+
+        <div class="buff-stack">
+          <label>攻撃力バフ1（%）<input id="attackBuff1A" type="number" min="0" step="0.1" value="0"></label>
+          <label>攻撃力バフ2（%）<input id="attackBuff2A" type="number" min="0" step="0.1" value="0"></label>
+          <label>攻撃力バフ3（%）<input id="attackBuff3A" type="number" min="0" step="0.1" value="0"></label>
+        </div>
+
+        <label>装甲軽減率（%）
+          <input id="armorA" type="number" min="0" max="100" step="0.1" value="0">
+          <small class="help">例：25%なら 0.75 倍で計算。種族防御ボーナスや鎧補正もここに入れます</small>
+        </label>
+
+        <label>装甲デバフ（%）
+          <input id="armorDebuffA" type="number" min="0" max="100" step="0.1" value="0">
+          <small class="help">例：20%なら相手の装甲軽減効果を 20% 減らします</small>
+        </label>
+
+        <div class="section-label">被弾部位補正（Aが攻撃を受ける場合）</div>
+        <div class="part-grid" id="partsA">
+          <label><input type="radio" name="partA" value="head">頭 <b>1.2倍</b></label>
+          <label><input type="radio" name="partA" value="body" checked>胴体 <b>1.0倍</b></label>
+          <label><input type="radio" name="partA" value="limb">足・手 <b>1.0倍</b></label>
+          <label><input type="radio" name="partA" value="tail">尻尾 <b>0.25倍</b></label>
+          <label><input type="radio" name="partA" value="custom">その他 <b>手入力</b></label>
+        </div>
+        <label class="custom-wrap hidden" id="customWrapA">個別倍率
+          <input id="customA" type="number" min="0" step="0.01" value="0.00">
+        </label>
+      </article>
+
+      <div class="versus">VS</div>
+
+      <article class="fighter" id="fighterB">
+        <div class="fighter-title">
+          <span class="tag tag-b">B</span>
+          <div><h2>恐竜B</h2></div>
+        </div>
+
+        <label>恐竜を選択
+          <select id="dinoB"></select>
+        </label>
+
+        <div class="editable-stats">
+          <label>体力<input id="hpB" type="number" min="0" step="any"></label>
+          <label>体重<input id="weightB" type="number" min="0.01" step="any"></label>
+          <label>初期鎧値<input id="initialArmorB" type="number" min="0" step="any"></label>
+        </div>
+
+        <label>種族補正
+          <select id="speciesModeB">
+            <option value="none">なし</option>
+            <option value="attack">攻撃</option>
+            <option value="defense">防御</option>
+          </select>
+        </label>
+
+        <label>種族補正倍率（%）
+          <input id="speciesBonusB" type="number" min="-100" max="100" step="0.1" value="0">
+        </label>
+
+        <label>攻撃力（手入力で変更可能）
+          <input id="attackB" type="number" min="0" step="any">
+        </label>
+
+        <div class="buff-stack">
+          <label>攻撃力バフ1（%）<input id="attackBuff1B" type="number" min="0" step="0.1" value="0"></label>
+          <label>攻撃力バフ2（%）<input id="attackBuff2B" type="number" min="0" step="0.1" value="0"></label>
+          <label>攻撃力バフ3（%）<input id="attackBuff3B" type="number" min="0" step="0.1" value="0"></label>
+        </div>
+
+        <label>装甲軽減率（%）
+          <input id="armorB" type="number" min="0" max="100" step="0.1" value="0">
+          <small class="help">例：25%なら 0.75 倍で計算。種族防御ボーナスや鎧補正もここに入れます</small>
+        </label>
+
+        <label>装甲デバフ（%）
+          <input id="armorDebuffB" type="number" min="0" max="100" step="0.1" value="0">
+          <small class="help">例：20%なら相手の装甲軽減効果を 20% 減らします</small>
+        </label>
+
+        <div class="section-label">被弾部位補正（Bが攻撃を受ける場合）</div>
+        <div class="part-grid" id="partsB">
+          <label><input type="radio" name="partB" value="head">頭 <b>1.2倍</b></label>
+          <label><input type="radio" name="partB" value="body" checked>胴体 <b>1.0倍</b></label>
+          <label><input type="radio" name="partB" value="limb">足・手 <b>1.0倍</b></label>
+          <label><input type="radio" name="partB" value="tail">尻尾 <b>0.25倍</b></label>
+          <label><input type="radio" name="partA" value="custom">その他 <b>手入力</b></label>
+        </div>
+        <label class="custom-wrap hidden" id="customWrapB">個別倍率
+          <input id="customB" type="number" min="0" step="0.01" value="0.00">
+        </label>
+      </article>
+    </section>
+
+    <section class="results">
+      <div class="result-heading">
+        <div>
+          <div class="eyebrow">CALCULATION</div>
+          <h2>相互ダメージ結果</h2>
+        </div>
+        <button id="reset" class="secondary">初期設定に戻す</button>
+      </div>
+
+      <div class="result-grid">
+        <article class="result-card">
+          <div class="result-direction">A → B</div>
+          <h3 id="nameAB">—</h3>
+          <div class="damage" id="damageAB">—</div>
+          <p>1発あたりの最終ダメージ</p>
+          <div class="detail" id="detailAB"></div>
+          <div class="hits" id="hitsAB"></div>
+        </article>
+
+        <article class="result-card">
+          <div class="result-direction">B → A</div>
+          <h3 id="nameBA">—</h3>
+          <div class="damage" id="damageBA">—</div>
+          <p>1発あたりの最終ダメージ</p>
+          <div class="detail" id="detailBA"></div>
+          <div class="hits" id="hitsBA"></div>
+        </article>
+      </div>
+
+      <p class="formula-note">
+        基本式：攻撃力 × 攻撃力バフ合計 × 種族補正 × （攻撃側体重 ÷ 防御側体重） × 被弾部位倍率 × （1 − 装甲軽減率 − 装甲デバフ） × 防御補正
+      </p>
+    </section>
+
+    <footer>個別補正や装甲の仕様は、ゲーム内検証に合わせて後から調整できます。</footer>
+  </main>
+
+  <script src="app.js"></script>
 </body>
 </html>
