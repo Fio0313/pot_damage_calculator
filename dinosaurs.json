@@ -5,7 +5,7 @@
     "hp": 400,
     "weight": 500,
     "attack": 0,
-    "wikiArmor": 1.0,
+    "initialArmor": 1.0,
     "notes": "基本攻撃力は提示されたWiki表を初期値として登録。追加効果は別途確認。"
   },
   {
@@ -14,7 +14,7 @@
     "hp": 550,
     "weight": 1000,
     "attack": 50,
-    "wikiArmor": 1.0,
+    "initialArmor": 1.0,
     "notes": "基本攻撃力は提示されたWiki表を初期値として登録。追加効果は別途確認。"
   },
   {
@@ -23,7 +23,7 @@
     "hp": 400,
     "weight": 1400,
     "attack": 40,
-    "wikiArmor": 1.0,
+    "initialArmor": 1.0,
     "notes": "基本攻撃力は提示されたWiki表を初期値として登録。追加効果は別途確認。"
   },
   {
@@ -32,7 +32,7 @@
     "hp": 450,
     "weight": 1400,
     "attack": 50,
-    "wikiArmor": 1.0,
+    "initialArmor": 1.0,
     "notes": "基本攻撃力は提示されたWiki表を初期値として登録。追加効果は別途確認。"
   },
   {
@@ -41,7 +41,7 @@
     "hp": 700,
     "weight": 1600,
     "attack": 30,
-    "wikiArmor": 1.0,
+    "initialArmor": 1.0,
     "notes": "基本攻撃力は提示されたWiki表を初期値として登録。追加効果は別途確認。"
   },
   {
@@ -50,7 +50,7 @@
     "hp": 500,
     "weight": 1900,
     "attack": 40,
-    "wikiArmor": 1.0,
+    "initialArmor": 1.0,
     "notes": "基本攻撃力は提示されたWiki表を初期値として登録。追加効果は別途確認。"
   },
   {
@@ -59,7 +59,7 @@
     "hp": 500,
     "weight": 2000,
     "attack": 60,
-    "wikiArmor": 1.0,
+    "initialArmor": 1.0,
     "notes": "基本攻撃力は提示されたWiki表を初期値として登録。追加効果は別途確認。"
   },
   {
@@ -68,7 +68,7 @@
     "hp": 500,
     "weight": 2100,
     "attack": 50,
-    "wikiArmor": 1.0,
+    "initialArmor": 1.0,
     "notes": "基本攻撃力は提示されたWiki表を初期値として登録。追加効果は別途確認。"
   },
   {
@@ -77,7 +77,7 @@
     "hp": 550,
     "weight": 2200,
     "attack": 55,
-    "wikiArmor": 1.0,
+    "initialArmor": 1.0,
     "notes": "基本攻撃力は提示されたWiki表を初期値として登録。追加効果は別途確認。"
   },
   {
@@ -86,7 +86,7 @@
     "hp": 600,
     "weight": 2200,
     "attack": 50,
-    "wikiArmor": 1.0,
+    "initialArmor": 1.0,
     "notes": "基本攻撃力は提示されたWiki表を初期値として登録。追加効果は別途確認。"
   },
   {
@@ -95,7 +95,7 @@
     "hp": 425,
     "weight": 2400,
     "attack": 45,
-    "wikiArmor": 1.0,
+    "initialArmor": 1.0,
     "notes": "基本攻撃力は提示されたWiki表を初期値として登録。追加効果は別途確認。"
   },
   {
@@ -104,7 +104,7 @@
     "hp": 525,
     "weight": 2400,
     "attack": 35,
-    "wikiArmor": 1.0,
+    "initialArmor": 1.0,
     "notes": "基本攻撃力は提示されたWiki表を初期値として登録。追加効果は別途確認。"
   },
   {
@@ -113,7 +113,7 @@
     "hp": 600,
     "weight": 2500,
     "attack": 40,
-    "wikiArmor": 1.0,
+    "initialArmor": 1.0,
     "notes": "基本攻撃力は提示されたWiki表を初期値として登録。追加効果は別途確認。"
   },
   {
@@ -122,7 +122,7 @@
     "hp": 550,
     "weight": 2500,
     "attack": 40,
-    "wikiArmor": 1.0,
+    "initialArmor": 1.0,
     "notes": "基本攻撃力は提示されたWiki表を初期値として登録。追加効果は別途確認。"
   },
   {
@@ -131,7 +131,7 @@
     "hp": 600,
     "weight": 3100,
     "attack": 40,
-    "wikiArmor": 1.0,
+    "initialArmor": 1.0,
     "notes": "基本攻撃力は提示されたWiki表を初期値として登録。追加効果は別途確認。"
   },
   {
@@ -140,7 +140,7 @@
     "hp": 575,
     "weight": 3100,
     "attack": 60,
-    "wikiArmor": 1.0,
+    "initialArmor": 1.0,
     "notes": "基本攻撃力は提示されたWiki表を初期値として登録。追加効果は別途確認。"
   },
   {
@@ -149,7 +149,7 @@
     "hp": 500,
     "weight": 3100,
     "attack": 25,
-    "wikiArmor": 1.0,
+    "initialArmor": 1.0,
     "notes": "基本攻撃力は提示されたWiki表を初期値として登録。追加効果は別途確認。"
   },
   {
@@ -158,7 +158,7 @@
     "hp": 600,
     "weight": 3500,
     "attack": 40,
-    "wikiArmor": 1.0,
+    "initialArmor": 1.0,
     "notes": "基本攻撃力は提示されたWiki表を初期値として登録。追加効果は別途確認。"
   },
   {
@@ -167,7 +167,7 @@
     "hp": 650,
     "weight": 3500,
     "attack": 50,
-    "wikiArmor": 1.0,
+    "initialArmor": 1.0,
     "notes": "基本攻撃力は提示されたWiki表を初期値として登録。追加効果は別途確認。"
   },
   {
@@ -176,7 +176,7 @@
     "hp": 600,
     "weight": 3500,
     "attack": 60,
-    "wikiArmor": 1.0,
+    "initialArmor": 1.0,
     "notes": "基本攻撃力は提示されたWiki表を初期値として登録。追加効果は別途確認。"
   },
   {
@@ -185,7 +185,7 @@
     "hp": 750,
     "weight": 3500,
     "attack": 40,
-    "wikiArmor": 1.0,
+    "initialArmor": 1.0,
     "notes": "基本攻撃力は提示されたWiki表を初期値として登録。追加効果は別途確認。"
   },
   {
@@ -194,7 +194,7 @@
     "hp": 525,
     "weight": 3500,
     "attack": 30,
-    "wikiArmor": 1.0,
+    "initialArmor": 1.0,
     "notes": "基本攻撃力は提示されたWiki表を初期値として登録。追加効果は別途確認。"
   },
   {
@@ -203,7 +203,7 @@
     "hp": 650,
     "weight": 3500,
     "attack": 55,
-    "wikiArmor": 1.0,
+    "initialArmor": 1.0,
     "notes": "基本攻撃力は提示されたWiki表を初期値として登録。追加効果は別途確認。"
   },
   {
@@ -212,7 +212,7 @@
     "hp": 550,
     "weight": 3500,
     "attack": 50,
-    "wikiArmor": 1.0,
+    "initialArmor": 1.0,
     "notes": "基本攻撃力は提示されたWiki表を初期値として登録。追加効果は別途確認。"
   },
   {
@@ -221,7 +221,7 @@
     "hp": 800,
     "weight": 4000,
     "attack": 40,
-    "wikiArmor": 1.0,
+    "initialArmor": 1.0,
     "notes": "基本攻撃力は提示されたWiki表を初期値として登録。追加効果は別途確認。"
   },
   {
@@ -230,7 +230,7 @@
     "hp": 750,
     "weight": 4000,
     "attack": 40,
-    "wikiArmor": 1.0,
+    "initialArmor": 1.0,
     "notes": "基本攻撃力は提示されたWiki表を初期値として登録。追加効果は別途確認。"
   },
   {
@@ -239,7 +239,7 @@
     "hp": 700,
     "weight": 4250,
     "attack": 40,
-    "wikiArmor": 1.0,
+    "initialArmor": 1.0,
     "notes": "基本攻撃力は提示されたWiki表を初期値として登録。追加効果は別途確認。"
   },
   {
@@ -248,7 +248,7 @@
     "hp": 775,
     "weight": 4500,
     "attack": 55,
-    "wikiArmor": 1.0,
+    "initialArmor": 1.0,
     "notes": "基本攻撃力は提示されたWiki表を初期値として登録。追加効果は別途確認。"
   },
   {
@@ -257,7 +257,7 @@
     "hp": 850,
     "weight": 4500,
     "attack": 45,
-    "wikiArmor": 1.1,
+    "initialArmor": 1.1,
     "notes": "基本攻撃力は提示されたWiki表を初期値として登録。追加効果は別途確認。"
   },
   {
@@ -266,7 +266,7 @@
     "hp": 600,
     "weight": 4500,
     "attack": 50,
-    "wikiArmor": 1.0,
+    "initialArmor": 1.0,
     "notes": "基本攻撃力は提示されたWiki表を初期値として登録。追加効果は別途確認。"
   },
   {
@@ -275,7 +275,7 @@
     "hp": 900,
     "weight": 4500,
     "attack": 60,
-    "wikiArmor": 1.0,
+    "initialArmor": 1.0,
     "notes": "基本攻撃力は提示されたWiki表を初期値として登録。追加効果は別途確認。"
   },
   {
@@ -284,7 +284,7 @@
     "hp": 600,
     "weight": 4500,
     "attack": 55,
-    "wikiArmor": 1.0,
+    "initialArmor": 1.0,
     "notes": "基本攻撃力は提示されたWiki表を初期値として登録。追加効果は別途確認。"
   },
   {
@@ -293,7 +293,7 @@
     "hp": 950,
     "weight": 5500,
     "attack": 30,
-    "wikiArmor": 1.1,
+    "initialArmor": 1.1,
     "notes": "基本攻撃力は提示されたWiki表を初期値として登録。追加効果は別途確認。"
   },
   {
@@ -302,7 +302,7 @@
     "hp": 800,
     "weight": 5500,
     "attack": 55,
-    "wikiArmor": 1.1,
+    "initialArmor": 1.1,
     "notes": "基本攻撃力は提示されたWiki表を初期値として登録。追加効果は別途確認。"
   },
   {
@@ -311,7 +311,7 @@
     "hp": 1100,
     "weight": 5500,
     "attack": 55,
-    "wikiArmor": 1.25,
+    "initialArmor": 1.25,
     "notes": "基本攻撃力は提示されたWiki表を初期値として登録。追加効果は別途確認。"
   },
   {
@@ -320,7 +320,7 @@
     "hp": 900,
     "weight": 5500,
     "attack": 50,
-    "wikiArmor": 1.1,
+    "initialArmor": 1.1,
     "notes": "基本攻撃力は提示されたWiki表を初期値として登録。追加効果は別途確認。"
   },
   {
@@ -329,7 +329,7 @@
     "hp": 850,
     "weight": 5500,
     "attack": 60,
-    "wikiArmor": 1.1,
+    "initialArmor": 1.1,
     "notes": "基本攻撃力は提示されたWiki表を初期値として登録。追加効果は別途確認。"
   },
   {
@@ -338,7 +338,7 @@
     "hp": 800,
     "weight": 5500,
     "attack": 40,
-    "wikiArmor": 1.1,
+    "initialArmor": 1.1,
     "notes": "基本攻撃力は提示されたWiki表を初期値として登録。追加効果は別途確認。"
   }
 ]
