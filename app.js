@@ -1,7 +1,8 @@
 let dinosaurs=[];
 const $=id=>document.getElementById(id);
+const roundNum=(n,digits=12)=>Number.parseFloat(Number(n).toFixed(digits));
 const fmt=n=>Number.isFinite(n)?n.toLocaleString("ja-JP",{maximumFractionDigits:2}):"—";
-const val=(id,fallback=0)=>{const raw=$(id).value;const n=Number(raw);return Number.isFinite(n)&&raw.trim()!==""?n:fallback;};
+const val=(id,fallback=0)=>{const raw=$(id).value;const n=Number(raw);return Number.isFinite(n)&&raw.trim()!==""?roundNum(n,12):fallback;};
 
 async function init(){
   const response=await fetch("dinosaurs.json");
@@ -29,8 +30,7 @@ function loadDino(side){
   $("weight"+side).value=d.weight;
   $("wikiArmor"+side).value=d.wikiArmor;
   $("attack"+side).value=d.attack;
-  const defaultArmorPercent=Math.max(0, (Number(d.wikiArmor)||1)-1)*100;
-  $("armor"+side).value=defaultArmorPercent;
+  $("armor"+side).value="0";
   $("speciesAttackBonus"+side).value="0";
   $("speciesDefenseBonus"+side).value="0";
   toggleCustom(side);
@@ -38,7 +38,7 @@ function loadDino(side){
 }
 function toggleCustom(side){
   const part=document.querySelector(`input[name="part${side}"]:checked`).value;
-  $("customWrap"+side).classList.toggle("hidden",part!=="custom");
+  $("customWrap"+side).classList.toggle("hidden",part!="custom");
 }
 function partMultiplier(side){
   const part=document.querySelector(`input[name="part${side}"]:checked`).value;
@@ -52,9 +52,13 @@ function attackBuffMultiplier(side){
   const speciesBonus=1+Math.max(0,val(`speciesAttackBonus${side}`,0))/100;
   return buffInputs.reduce((total, multiplier)=>total*multiplier, 1)*speciesBonus;
 }
+function speciesArmorBaseMultiplier(side){
+  return Math.max(.000001, Number(selected(side).wikiArmor) || 1);
+}
 function armorReductionMultiplier(side){
   const reductionPct=Math.max(0,val("armor"+side,0))+Math.max(0,val(`speciesDefenseBonus${side}`,0));
-  return Math.max(0, 1 - reductionPct/100);
+  const armorMultiplier=speciesArmorBaseMultiplier(side);
+  return Math.max(0, (1 - reductionPct/100) / armorMultiplier);
 }
 function armorDebuffMultiplier(side){
   const reductionPct=Math.max(0,val("armorDebuff"+side,0));
@@ -83,7 +87,7 @@ function render(key,attacker,defender,r){
   const armorReductionPct=Math.max(0, (1-r.armor)*100);
   const armorDebuffPct=Math.max(0, (1-r.armorDebuff)*100);
   const totalAttackBuffPct=Math.max(0, (r.attackBuff-1)*100);
-  $("detail"+key).innerHTML=`体重補正：${fmt(r.weightRatio)}倍<br>部位補正：${fmt(r.body)}倍<br>装甲軽減：${fmt(armorReductionPct)}%<br>攻撃力総補正：${fmt(totalAttackBuffPct)}%<br>装甲デバフ：${fmt(armorDebuffPct)}%<br>補正前：${fmt(r.raw)} → 部位適用後：${fmt(r.afterPart)}`;
+  $("detail"+key).innerHTML=`体重補正：${fmt(r.weightRatio)}倍<br>部位補正：${fmt(r.body)}倍<br>装甲軽減：${fmt(armorReductionPct)}%<br>攻撃力総補正：${fmt(totalAttackBuffPct)}%<br>装甲デバフ：${fmt(armorDebuffPct)}%`;
   $("hits"+key).textContent=r.hits===null?"撃破できません（ダメージ0）":`撃破まで ${fmt(r.hits)} 発（対象HP：${fmt(r.hp)}）`;
 }
 function calculate(){
@@ -95,7 +99,7 @@ function calculate(){
 function resetAll(){
   ["A","B"].forEach(side=>{
     loadDino(side);
-    $("armor"+side).value=Math.max(0, (Number($("wikiArmor"+side).value)||1)-1)*100;
+    $("armor"+side).value="0";
     $("custom"+side).value="0.00";
     $("armorDebuff"+side).value="0";
     $("speciesAttackBonus"+side).value="0";
@@ -106,4 +110,4 @@ function resetAll(){
   });
   calculate();
 }
-init().catch(err=>{document.querySelector("main").insertAdjacentHTML("afterbegin",`<p class="notice">恐竜データを読み込めませんでした。index.html と dinosaurs.json を同じフォルダに配置してください。</p>`);console.error(err);});
+init().catch(err=>{document.querySelector("main").insertAdjacentHTML("afterbegin",`<p class="notice">恐竜データを読み込めませんでした。index.html と dinosaurs.json を同じフォルダに置いてください。</p>`);});
