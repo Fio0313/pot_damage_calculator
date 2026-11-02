@@ -221,6 +221,26 @@ select:focus {
   margin-top: 12px;
 }
 
+.species-inline {
+  display: grid;
+  grid-template-columns: minmax(150px, 1fr) minmax(150px, 1.2fr);
+  gap: 8px;
+  margin-top: 12px;
+}
+
+.species-field {
+  display: block;
+  color: #c8d2dc;
+  font-size: .88rem;
+  font-weight: 650;
+}
+
+.species-field input:disabled {
+  opacity: 0.55;
+  cursor: not-allowed;
+  background: #171f2a;
+}
+
 .hidden {
   display: none !important;
 }
