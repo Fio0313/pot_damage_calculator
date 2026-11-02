@@ -22,7 +22,7 @@ async function init(){
     select.value=side==="A"?dinosaurs.findIndex(d=>d.name==="サルコスクス"):dinosaurs.findIndex(d=>d.name==="ティラノサウルス");
     select.addEventListener("change",()=>loadDino(side));
 
-    ["hp","weight","initialArmor","attack","armor","custom","speciesBonus"].forEach(k=>$(k+side).addEventListener("input",calculate));
+    ["hp","weight","initialArmor","attack","custom","speciesBonus","attackBuff1","attackBuff2","attackBuff3","attackDebuff1","attackDebuff2","defenseBuff1","defenseBuff2","defenseBuff3","defenseDebuff1","defenseDebuff2"].forEach(k=>$(k+side).addEventListener("input",calculate));
     $("speciesMode"+side).addEventListener("change",()=>{
       toggleSpeciesBonus(side);
       calculate();
@@ -61,6 +61,18 @@ function loadDino(side){
   $("speciesMode"+side).value="none";
   $("speciesBonus"+side).value="0";
   toggleSpeciesBonus(side);
+
+  $("attackBuff1"+side).value="0";
+  $("attackBuff2"+side).value="0";
+  $("attackBuff3"+side).value="0";
+  $("attackDebuff1"+side).value="0";
+  $("attackDebuff2"+side).value="0";
+
+  $("defenseBuff1"+side).value="0";
+  $("defenseBuff2"+side).value="0";
+  $("defenseBuff3"+side).value="0";
+  $("defenseDebuff1"+side).value="0";
+  $("defenseDebuff2"+side).value="0";
 
   toggleCustom(side);
   calculate();
@@ -124,6 +136,39 @@ function attackBuffTotal(side){
 }
 
 // ============================
+// 関数名 : attackDebuffTotal
+// 引数 : side (文字列: "A" または "B")
+// 戻り値: number (攻撃デバフ合計倍率)
+// 説明 : 攻撃デバフ1〜2の合計をまとめて倍率に変換する
+// ============================
+function attackDebuffTotal(side){
+  const sum=val("attackDebuff1"+side,0)+val("attackDebuff2"+side,0);
+  return 1 - sum/100;
+}
+
+// ============================
+// 関数名 : defenseBuffTotal
+// 引数 : side (文字列: "A" または "B")
+// 戻り値: number (防御バフ合計倍率)
+// 説明 : 防御バフ1〜3の合計をまとめて倍率に変換する。アーマー%はダメージ減少として扱う
+// ============================
+function defenseBuffTotal(side){
+  const sum=val("defenseBuff1"+side,0)+val("defenseBuff2"+side,0)+val("defenseBuff3"+side,0);
+  return 1 - sum/100;
+}
+
+// ============================
+// 関数名 : defenseDebuffTotal
+// 引数 : side (文字列: "A" または "B")
+// 戻り値: number (防御デバフ合計倍率)
+// 説明 : 防御デバフ1〜2の合計をまとめて倍率に変換する
+// ============================
+function defenseDebuffTotal(side){
+  const sum=val("defenseDebuff1"+side,0)+val("defenseDebuff2"+side,0);
+  return 1 - sum/100;
+}
+
+// ============================
 // 関数名 : partMultiplier
 // 引数 : side (文字列: "A" または "B")
 // 戻り値: number (部位倍率)
@@ -150,34 +195,36 @@ function compute(attSide,defSide){
   const defenderWeight=Math.max(.000001,val("weight"+defSide,0));
 
   const body=partMultiplier(defSide);
-  const armorReduction=Math.max(0,val("armor"+defSide,0))/100;
-  const armorDebuff=Math.max(0,val("armorDebuff"+attSide,0))/100;
 
   const attackBuff=attackBuffTotal(attSide);
-  const speciesAttackBoost=speciesMultiplier(attSide);
+  const attackDebuff=attackDebuffTotal(attSide);
+  const defenseBuff=defenseBuffTotal(defSide);
+  const defenseDebuff=defenseDebuffTotal(defSide);
+
+  const attackSpeciesBoost=speciesMultiplier(attSide);
+  const defenseSpeciesBoost=speciesMultiplier(defSide);
 
   const weightRatio=attackerWeight/defenderWeight;
-  const raw=attack*attackBuff*speciesAttackBoost*weightRatio;
+  const raw=attack*attackBuff*attackSpeciesBoost*weightRatio;
   const afterPart=raw*body;
 
-  const defenseMultiplier=speciesMultiplier(defSide);
-  const finalArmorFactor=Math.max(0,1-armorReduction-armorDebuff);
-  const final=afterPart*finalArmorFactor*defenseMultiplier;
+  const final=afterPart*defenseBuff*defenseDebuff*attackDebuff*defenseSpeciesBoost;
 
   const hits=final>0?Math.ceil(hp/final):null;
 
   return {
     weightRatio,
     body,
-    armorReduction,
-    armorDebuff,
-    finalArmorFactor,
-    defenseMultiplier,
+    attackBuff,
+    attackDebuff,
+    defenseBuff,
+    defenseDebuff,
     raw,
     afterPart,
     final,
     hits,
-    hp
+    hp,
+    defenseSpeciesBoost
   };
 }
 
@@ -193,10 +240,12 @@ function render(key,attacker,defender,r){
   $("detail"+key).innerHTML=
     "体重補正："+fmt(r.weightRatio)+"倍<br>"+
     "部位補正："+fmt(r.body)+"倍<br>"+
-    "装甲軽減："+fmt(r.armorReduction)+"倍<br>"+
-    "装甲デバフ："+fmt(r.armorDebuff)+"倍<br>"+
+    "攻撃バフ："+fmt(r.attackBuff)+"倍<br>"+
+    "攻撃デバフ："+fmt(r.attackDebuff)+"倍<br>"+
+    "防御バフ："+fmt(r.defenseBuff)+"倍<br>"+
+    "防御デバフ："+fmt(r.defenseDebuff)+"倍<br>"+
     "補正前："+fmt(r.raw)+" → 部位適用後："+fmt(r.afterPart)+"<br>"+
-    "最終係数："+fmt(r.finalArmorFactor)+" × "+fmt(r.defenseMultiplier)+"<br>"+
+    "防御補正："+fmt(r.defenseSpeciesBoost)+"<br>"+
     "最終ダメージ："+fmt(r.final);
 
   $("hits"+key).textContent=r.hits===null?"撃破できません（ダメージ0）":"撃破まで "+fmt(r.hits)+" 発（対象HP："+fmt(r.hp)+"）";
@@ -224,12 +273,10 @@ function calculate(){
 function resetAll(){
   ["A","B"].forEach(side=>{
     loadDino(side);
-    $("armor"+side).value="0";
-    $("armorDebuff"+side).value="0";
+
     $("custom"+side).value="0.00";
     $("speciesMode"+side).value="none";
     $("speciesBonus"+side).value="0";
-    toggleSpeciesBonus(side);
 
     document.querySelector(`input[name="part${side}"][value="body"]`).checked=true;
     toggleCustom(side);
